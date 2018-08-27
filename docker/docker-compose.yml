@@ -1,0 +1,37 @@
+version: "3"
+
+networks:
+  mysite:
+    driver: bridge
+
+services:
+  web:
+    image: mysite-web
+    container_name: mysite-web
+    build:
+      context: ..
+      dockerfile: docker/web.Dockerfile
+    environment:
+      - DJANGO_SETTINGS_MODULE=mysite.settings.dev
+    working_dir: /srv/work
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - mysite
+    volumes:
+      - "..:/srv/work"
+    command: ["docker-entrypoint.sh", "dev-webserver"]
+  db:
+    image: mysite-db
+    container_name: mysite-db
+    networks: 
+      - mysite
+    build:
+      context: .
+      dockerfile: ./db.Dockerfile
+    ports:
+      - "5432:5432"
+    volumes:
+      - "../.docker-assets/db/data:/var/lib/postgresql/data"

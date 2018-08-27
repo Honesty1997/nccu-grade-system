@@ -1,0 +1,6 @@
+# PostgreSQL
+.docker-assets/
+
+# pycache
+*.pyc
+__pycache__
