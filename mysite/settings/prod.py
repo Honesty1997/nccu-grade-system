@@ -1,1 +1,1 @@
-from .base import *
+from mysite.settings.base import *
