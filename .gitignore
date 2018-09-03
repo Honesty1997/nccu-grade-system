@@ -1,9 +1,12 @@
 # PostgreSQL
-.docker-assets/
+.docker-assets
 
 # pycache
 *.pyc
 __pycache__
 
-# vscode
+# vscode setting
 .vscode
+
+# sqlite
+db.sqlite3

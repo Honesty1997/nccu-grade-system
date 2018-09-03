@@ -21,6 +21,6 @@ import apps.student.urls as student_routes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('course', include(course_routes)),
-    path('student', include(student_routes)),
+    path('course/', include(course_routes)),
+    path('student/', include(student_routes)),
 ]
