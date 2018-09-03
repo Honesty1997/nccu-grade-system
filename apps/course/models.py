@@ -42,8 +42,8 @@ class Course(BaseModel, Timestamp):
                 for subject in all_scoring_subjects:
                     set_default_score = Grade(subject=subject, student=student, score=0)
                     set_default_score.save()
-
-        return self.save(), count
+        self.save()
+        return self, count
 
     def unregister(self, students):
         pass
@@ -52,6 +52,12 @@ class Course(BaseModel, Timestamp):
         pass
 
     def add_new_subject(self, title):
+        """
+            Args:
+                title String: The title of the new subject.
+            Returns:
+                The ScoringSubject created.
+        """
         obj, created = ScoringSubject.objects.get_or_create(title=title, course=self)
         if created:
             from apps.grade.models import Grade
