@@ -18,9 +18,10 @@ from django.urls import path, include
 
 import apps.course.urls as course_routes
 import apps.student.urls as student_routes
-
+import apps.grade.urls as grade_routes
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('course/', include(course_routes)),
     path('student/', include(student_routes)),
+    path('grade/', include(grade_routes)),
 ]

@@ -30,5 +30,9 @@ class Person(BaseModel):
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
+    @property
+    def name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
     class Meta:
         abstract = True

@@ -46,9 +46,6 @@ python manage.py runserver
 ```
 Open your browser and enter ```localhost:8080```, you should see your web service running.
 
-
-
-
 Docker Solution
 =====
 The part is not completed yet. Please don't use this solution. If you want to use docker solution, after you start the compose service, you need to manually attach into the container's shell and run ```python manage.py migrate``` to init database.

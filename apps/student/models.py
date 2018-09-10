@@ -20,3 +20,6 @@ class Student(Person, Timestamp):
         choices=YEAR_IN_SCHOOL_CHOICES,
         default=FRESHMAN,
     )
+    
+    class Meta:
+        ordering = ['id']

@@ -27,7 +27,7 @@ class Course(BaseModel, Timestamp):
                 Students List[Student]: list of student object that need to be registered to 
                 the course.
             Returns:
-                A integer indicates how many students are successfully registered to the coourse.
+                A integer indicates how many students are successfully registered to the course.
         """
         from apps.grade.models import Grade
         count = 0
@@ -67,6 +67,10 @@ class Course(BaseModel, Timestamp):
                 set_default_grade.save()
         return obj
 
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('course_detail', kwargs={'pk': self.pk})
+
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -78,7 +82,12 @@ class ScoringSubject(BaseModel, Timestamp):
         for subject in self.grade_set.all():
             total += subject.score
             count += 1
-        return total / count
+        
+        try:
+            average = total / count
+        except ZeroDivisionError:
+            average = 0
+        return average
 
     def __str__(self):
         return '[{}]{}'.format(self.course, self.title)

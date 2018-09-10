@@ -16,7 +16,7 @@ class Grade(BaseModel, Timestamp):
         on_delete=models.CASCADE
     )
     score = models.DecimalField(
-        max_digits=3,
+        max_digits=5,
         decimal_places=2
     )
 

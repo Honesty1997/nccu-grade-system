@@ -1,0 +1,15 @@
+{% extends 'base/layout.html' %}
+{% block main %}
+    <ul class="collection">
+        {% for course in course_list %}
+            <li class="collection-item">
+            <a href="{% url 'course:detail' course.pk %}">
+                        <h5>{{ course.course_name }} ({{ course.course_number}})</h5>
+                    </a>
+                <p>{{ course.description }}</p>
+                <p>Registered Number: {{ course.registered_students.all | length }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    {% include "components/paginator.html" %}
+{% endblock %}

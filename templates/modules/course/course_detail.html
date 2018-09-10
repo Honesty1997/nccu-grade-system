@@ -1,0 +1,32 @@
+{% extends 'base/layout.html' %}
+
+{% block main %}
+    <h2>{{ course.course_name }}({{ course.course_number}})</h2>
+    <p>{{ course.description }}</p>
+    <div class="row">
+        <div class="col s12 m6">
+            <h4>Subject List</h4>
+            {% if course.scoringsubject_set %}
+                <ul class="collection">
+                    {% for subject in course.scoringsubject_set.all %}
+                        <li class="collection-item">
+                            <a href="{% url 'course:subject' subject.pk %}">{{ subject.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="col s12 m6">
+            <h4>Student List</h4>
+            {% if course.registered_students %}
+                <ul class="collection">
+                    {% for student in course.registered_students.all %}
+                        <li class="collection-item">
+                            <a href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
