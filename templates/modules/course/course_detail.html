@@ -1,29 +1,35 @@
 {% extends 'base/layout.html' %}
 
 {% block main %}
+<section style="display: flex; justify-content: end;">
+    <a href="{% url 'course:register' course.id %}" class="btn" style="margin-right:5px;">Manage Students</a>
+    <a href="{% url 'course:create_subject' course.id %}" class="btn" style="margin-right:5px;">Add New Subject</a>
+    <a href="{% url 'course:update' course.id %}" class="btn" style="margin-right:5px;">Edit the Course</a>
+    <a href="{% url 'course:delete' course.id %}" class="btn">Delete the Course</a>
+</section>
     <h2>{{ course.course_name }}({{ course.course_number}})</h2>
     <p>{{ course.description }}</p>
     <div class="row">
         <div class="col s12 m6">
-            <h4>Subject List</h4>
             {% if course.scoringsubject_set %}
-                <ul class="collection">
+                <ul class="collection with-header">
+                    <li class="collection-header">
+                        <h4>Subject List</h4>
+                    </li>
                     {% for subject in course.scoringsubject_set.all %}
-                        <li class="collection-item">
-                            <a href="{% url 'course:subject' subject.pk %}">{{ subject.title }}</a>
-                        </li>
+                        <a class="collection-item" href="{% url 'course:subject' subject.pk %}">{{ subject.title }}</a>
                     {% endfor %}
                 </ul>
             {% endif %}
         </div>
         <div class="col s12 m6">
-            <h4>Student List</h4>
             {% if course.registered_students %}
-                <ul class="collection">
+                <ul class="collection with-header">
+                    <li class="collection-header">
+                        <h4>Subject List</h4>
+                    </li>
                     {% for student in course.registered_students.all %}
-                        <li class="collection-item">
-                            <a href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>
-                        </li>
+                        <a class="collection-item" href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>
                     {% endfor %}
                 </ul>
             {% endif %}

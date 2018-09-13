@@ -1,5 +1,9 @@
 {% extends 'base/layout.html' %}
 {% block main %}
+<section style="display: flex; justify-content: end;">
+    <a  href="{% url 'course:create' %}" class="btn">Add New Course</a>
+</section>
+<section>
     <ul class="collection">
         {% for course in course_list %}
             <li class="collection-item">
@@ -12,4 +16,5 @@
         {% endfor %}
     </ul>
     {% include "components/paginator.html" %}
+</section>
 {% endblock %}

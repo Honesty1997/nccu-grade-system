@@ -7,6 +7,12 @@ class BaseModel(models.Model):
         obj, created = cls.objects.get_or_create(**kwargs)
         return obj, created
 
+    def info(self, **kwargs):
+        info = {}
+        for key, value in kwargs.items():
+            info[key] = value
+        return info
+
     class Meta:
         abstract = True
 

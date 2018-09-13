@@ -46,7 +46,20 @@ class Course(BaseModel, Timestamp):
         return self, count
 
     def unregister(self, students):
-        pass
+        from apps.grade.models import Grade
+        count = 0
+        all_scoring_subjects = self.scoringsubject_set.all()
+        for student in students:
+            # If the student have registered to the course, remove the student from the course.
+            if student in self.registered_students.all():
+                count += 1
+                self.registered_students.remove(student)
+                # Remove the student's scoring_subjects at the same time.
+                for subject in all_scoring_subjects:
+                    student_grade = Grade.objects.get(student=student, subject=subject)
+                    student_grade.delete()
+        self.save()
+        return self, count
 
     def search_student_score(self, student):
         pass
@@ -68,8 +81,8 @@ class Course(BaseModel, Timestamp):
         return obj
 
     def get_absolute_url(self):
-        from django.core.urlresolvers import reverse
-        return reverse('course_detail', kwargs={'pk': self.pk})
+        from django.shortcuts import reverse
+        return reverse('course:detail', kwargs={'pk': self.pk})
 
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)
@@ -91,5 +104,9 @@ class ScoringSubject(BaseModel, Timestamp):
 
     def __str__(self):
         return '[{}]{}'.format(self.course, self.title)
+    
+    def get_absolute_url(self):
+        from django.shortcuts import reverse
+        return reverse('course:subject', kwargs={'pk': self.pk })
 
 
