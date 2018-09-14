@@ -60,9 +60,12 @@ class SubjectView(View):
 
 class RegisterView(View):
     def get(self, request, pk):
+        accept_type = request.META.get('HTTP_ACCEPT', 'text/html')
         course = get_object_or_404(Course, pk=pk)
         student_list = [student.info()
                         for student in course.registered_students.all()]
+        if accept_type == 'application/json':
+            return JsonResponse({'studentList': student_list})
         return render(request, 'modules/course/register.html', {'pk': pk, 'student_list': student_list})
 
     def post(self, request, pk):
@@ -109,11 +112,7 @@ def student_search(request, pk):
 
     response = {
         'status': 'success',
-        'student': student.info(),
+        'student': student.info(isRegistered=student in course.registered_students.all()),
     }
-    if student in course.registered_students.all():
-        response['isRegistered'] = True
-    else:
-        response['isRegistered'] = False
 
     return JsonResponse(response) 

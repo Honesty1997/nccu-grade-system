@@ -1,0 +1,36 @@
+{
+  "name": "nccu-grade",
+  "version": "1.0.0",
+  "description": "Prerequisite ===== 1. python3.6 2. virtualenv(or pyenv or any python virtual environment) 3. Docker(optional)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Honesty1997/nccu-grade-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Honesty1997/nccu-grade-system/issues"
+  },
+  "homepage": "https://github.com/Honesty1997/nccu-grade-system#readme",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "materialize-css": "^1.0.0-rc.2",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.4.14",
+    "@types/react-dom": "^16.0.7",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "parcel": "^1.9.7",
+    "typescript": "^3.0.3"
+  }
+}

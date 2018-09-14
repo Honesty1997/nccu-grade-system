@@ -4,6 +4,9 @@ from django.db import models
 class BaseModel(models.Model):
     @classmethod
     def create(cls, **kwargs):
+        """
+            A quick way to use get_or_create on Class level.
+        """
         obj, created = cls.objects.get_or_create(**kwargs)
         return obj, created
 

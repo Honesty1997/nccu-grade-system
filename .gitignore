@@ -10,3 +10,12 @@ __pycache__
 
 # sqlite
 db.sqlite3
+
+# node_modules
+node_modules
+
+# js build file
+static/build
+
+# parcel cache
+.cache
