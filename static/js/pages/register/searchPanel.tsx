@@ -66,7 +66,8 @@ export default class SearchPanel extends Component {
                 />
                 <button id="search" className="btn" onClick={this.onClick}>Search</button>
                 <SearchResults 
-                    studentList={this.state.studentList}
+                    fetchedList={this.state.studentList}
+                    studentList={this.props.studentList}
                     addToList={this.props.addToList}
                     fetchManageStudentResults={this.props.fetchManageStudentResults}
                 />

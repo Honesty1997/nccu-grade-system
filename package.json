@@ -4,7 +4,8 @@
   "description": "Prerequisite ===== 1. python3.6 2. virtualenv(or pyenv or any python virtual environment) 3. Docker(optional)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "parcel watch static/js/pages/register/register.tsx --out-dir static/build/js"
   },
   "repository": {
     "type": "git",

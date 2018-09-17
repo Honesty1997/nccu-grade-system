@@ -12,7 +12,6 @@ export default class SearchResults extends Component {
         const fetchAddResults = this.props.fetchManageStudentResults('add', studentId);
         fetchAddResults
             .then((res) => {
-                console.log(res);
                 return res.json();
             })
             .then((data) => {
@@ -26,9 +25,9 @@ export default class SearchResults extends Component {
     }
 
     render() {
-        const studentList = this.props.studentList.map((student) => {
+        const studentList = this.props.fetchedList.map((student) => {
             let button;
-            if (student.isRegistered) {
+            if (this.props.studentList.some((stu) => (stu.pk == student.pk))) {
                 button = (<button className="secondary-content btn-small student-add-button" disabled>
                     Add
                 </button>

@@ -24,7 +24,6 @@ export default class ManagePanel extends Component {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 M.toast({ html: 'error', classes: 'red' });
             });
     }

@@ -112,7 +112,7 @@ def student_search(request, pk):
 
     response = {
         'status': 'success',
-        'student': student.info(isRegistered=student in course.registered_students.all()),
+        'student': student.info(),
     }
 
     return JsonResponse(response) 

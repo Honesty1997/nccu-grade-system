@@ -61,9 +61,6 @@ class Course(BaseModel, Timestamp):
         self.save()
         return self, count
 
-    def search_student_score(self, student):
-        pass
-
     def add_new_subject(self, title):
         """
             Args:

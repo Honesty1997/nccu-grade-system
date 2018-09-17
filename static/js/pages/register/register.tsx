@@ -111,11 +111,12 @@ class Register extends Component {
                 <SearchPanel 
                 addToList={this.addToList} 
                 fetchManageStudentResults={this.fetchManageStudentResults}
+                studentList={this.state.studentList}
                 courseId={courseId} />
                 <ManagePanel 
                  removeFromList={this.removeFromList}
                  fetchManageStudentResults={this.fetchManageStudentResults}
-                    studentList={this.state.studentList}
+                 studentList={this.state.studentList}
                  />
             </div>
         );

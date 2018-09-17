@@ -26,7 +26,7 @@
             {% if course.registered_students %}
                 <ul class="collection with-header">
                     <li class="collection-header">
-                        <h4>Subject List</h4>
+                        <h4>Student List</h4>
                     </li>
                     {% for student in course.registered_students.all %}
                         <a class="collection-item" href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>

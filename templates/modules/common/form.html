@@ -1,9 +1,20 @@
 {% extends 'base/layout.html' %}
 
 {% block main %}
-<form method='POST'>
+<form class="input-field" method='POST'>
     {% csrf_token %}
-    {{ form.as_p }}
+        {% for field in form %}
+        <div class="input-field">
+            {{ field.errors }}
+            {{ field }}
+            {{ field.label_tag }}
+        </div>
+        {% endfor %}
     <input class="btn" type="submit" value="Submit">
 </form>
+<script>
+$(document).ready(function(){
+    $('select').formSelect();
+});
+</script>
 {% endblock %}

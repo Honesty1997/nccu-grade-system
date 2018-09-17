@@ -33,5 +33,9 @@ class Student(Person, Timestamp):
         info['name'] = self.name
         return info
 
+    def get_absolute_url(self):
+        from django.shortcuts import reverse
+        return reverse('student:detail', kwargs={'pk': self.pk})
+
     class Meta:
         ordering = ['id']

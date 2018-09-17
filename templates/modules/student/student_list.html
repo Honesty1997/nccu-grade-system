@@ -1,7 +1,9 @@
 {% extends 'base/layout.html' %}
 
 {% block main %}
-<h3>Student List</h3>
+<section style="display: flex; justify-content: end;">
+    <a href="{% url 'student:create' %}" class="btn" style="margin-right:5px;">Add a Student</a>
+</section>
 <ul class="collection">
     {% for student in student_list %}
     <li class="collection-item">
