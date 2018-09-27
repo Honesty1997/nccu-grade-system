@@ -33,14 +33,16 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.student.apps.StudentConfig',
     'apps.course.apps.CourseConfig',
     'apps.grade.apps.GradeConfig',
+    'apps.staff.apps.StaffConfig',
+    'apps.auth.apps.AuthConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# Auth setting overriding
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'site_auth.User'

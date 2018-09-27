@@ -20,9 +20,11 @@ from django.views.generic import TemplateView
 import apps.course.urls as course_routes
 import apps.student.urls as student_routes
 import apps.grade.urls as grade_routes
+import apps.auth.urls as auth_routes
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('account/', include(auth_routes)),
     path('course/', include(course_routes)),
     path('student/', include(student_routes)),
     path('grade/', include(grade_routes)),

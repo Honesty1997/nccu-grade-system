@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登入</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include "base/style.html" %}
+    {% include "base/script.html" %}
+<style>
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .login-form {
+        width: 350px;
+        height: auto;
+        padding: 25px 25px;
+    }
+
+    button {
+        margin-top: 25px;
+    }
+</style>
+
+</head>
+<body>
+<main>
+<div class="error-message">
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+</div>
+<div class="login-form z-depth-2 grey lighten-4">
+    <div class="row">
+        <form class="col s12" action="{% url 'auth:login' %}" method="POST">
+            {% csrf_token %}
+            <div class="col s12 input-field">
+                {{ form.username }}
+                {{ form.username.label_tag }}
+            </div>
+            <div class="col s12 input-field">
+                {{ form.password }}
+                {{ form.password.label_tag }}
+            </div>
+            <a href="/account/forget" class="col s12 left">忘記帳號密碼?</a>
+            <button type="submit" class="col s12 btn">登入</button>
+        </form>
+    </div>
+</div>
+</main>
+</body>
+</html>

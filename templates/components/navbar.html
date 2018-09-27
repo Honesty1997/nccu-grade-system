@@ -4,6 +4,11 @@
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="{% url 'course:list' %}">Courses</a></li>
             <li><a href="{% url 'student:list' %}">Students</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'auth:logout' %}">Log out</a></li>
+            {% else %}
+                <li><a href="{% url 'auth:login' %}">Log In</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>

@@ -32,7 +32,7 @@ class Person(BaseModel):
     address = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=50)
     cellphone_number = models.CharField(max_length=50, blank=True)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     registered_date = models.DateField(blank=True, null=True)
     leave_date = models.DateField(blank=True, null=True)
 
