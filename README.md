@@ -2,7 +2,8 @@ Prerequisite
 =====
 1. python3.6
 2. virtualenv(or pyenv or any python virtual environment)
-3. Docker(optional)
+3. Node.js and npm.
+4. Docker(optional)
 
 Installation Guide(Local with SQLite)
 ======
@@ -40,7 +41,12 @@ pip install -r requirements.txt
 ```
 python manage.py migrate
 ```
-6. Start server.
+6. Build front js file.(you need to have npm and node.js installed in order to run the following command)
+```
+npm install
+npm run build
+```
+7. Start server.
 ```
 python manage.py runserver
 ```
@@ -48,6 +54,13 @@ Open your browser and enter ```localhost:8080```, you should see your web servic
 
 Docker Solution
 =====
-The part is not completed yet. Please don't use this solution. If you want to use docker solution, after you start the compose service, you need to manually attach into the container's shell and run ```python manage.py migrate``` to init database.
+The part is not completed yet. Please don't use this solution. 
+If you want to use docker solution, please see the following instructions.
+1. ```make shell``` attach into the container's shell.
+2. ```python manage.py migrate``` migrate the db.
+3. Install Node and npm(not completed yet)
+4. ```npm run build``` build the front end js file.
+
+Command
 1. ```make dev-up``` will start a new python web service along with a PostgreSQL sever.
 2. ```make dev-build``` will build a image.
