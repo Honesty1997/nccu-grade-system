@@ -2,7 +2,7 @@ Prerequisite
 =====
 1. python3.6
 2. virtualenv(or pyenv or any python virtual environment)
-3. Node.js and npm.
+3. Node.js(lts) and npm.
 4. Docker(optional)
 
 Installation Guide(Local with SQLite)
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 ```
 python manage.py migrate
 ```
-6. Build front js file.(you need to have npm and node.js installed in order to run the following command)
+6. Build front js file.(you need to have npm and node.js installed in order to run the following commands)
 ```
 npm install
 npm run build
@@ -50,17 +50,17 @@ npm run build
 ```
 python manage.py runserver
 ```
-Open your browser and enter ```localhost:8080```, you should see your web service running.
+Open your browser and enter ```localhost:8080```, you should see your web service up and running.
 
 Docker Solution
 =====
-The part is not completed yet. Please don't use this solution. 
-If you want to use docker solution, please see the following instructions.
-1. ```make shell``` attach into the container's shell.
-2. ```python manage.py migrate``` migrate the db.
-3. Install Node and npm(not completed yet)
-4. ```npm run build``` build the front end js file.
+1. ```make dev-up``` start a new python web service along with a PostgreSQL sever.
+2. ```make dev-build``` build a image.
+3. ```make dev-down```  stop the service and remove the container.
+4. ```make shell``` attach into the web service's bash.
+After you start a contaier, you need to attach into the container and migrate database manually. Use the following commands.
 
-Command
-1. ```make dev-up``` will start a new python web service along with a PostgreSQL sever.
-2. ```make dev-build``` will build a image.
+```
+make shell
+python manage.py migrate
+```
