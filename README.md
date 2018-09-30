@@ -58,8 +58,8 @@ Docker Solution
 2. ```make dev-build``` build a image.
 3. ```make dev-down```  stop the service and remove the container.
 4. ```make shell``` attach into the web service's bash.
-After you start a contaier, you need to attach into the container and migrate database manually. Use the following commands.
 
+After you start a contaier, you need to attach into the container and migrate database manually. Use the following commands.
 ```
 make shell
 python manage.py migrate

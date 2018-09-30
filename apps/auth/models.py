@@ -72,5 +72,17 @@ class User(AbstractBaseUser, Person, Timestamp):
     def is_staff(self):
         return self.role_field == 4
 
+    @property
+    def is_student(self):
+        return self.role_field == 1
+
+    @property
+    def is_professor(self):
+        return self.role_field == 2
+
+    @property
+    def is_admin(self):
+        return self.role_field == 3
+
     def __str__(self):
         return '[{}] {}'.format(self.role, self.name)

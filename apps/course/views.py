@@ -4,6 +4,9 @@ from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from django.views import View
 from django.http import JsonResponse
 import json
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from mysite.views import ListView
 from .models import Course, ScoringSubject
@@ -11,41 +14,41 @@ from apps.student.models import Student
 from .forms import ScoringSubjectForm
 # Create your views here.
 
-class CourseList(ListView):
+class CourseList(LoginRequiredMixin, ListView):
     model = Course
     template_name = 'modules/course/course.html'
     context_object_name = 'course_list'
     base_url = 'course:list'
     paginate_by = 25
 
-class CourseDetail(DetailView):
+class CourseDetail(LoginRequiredMixin, DetailView):
     model = Course
     template_name = 'modules/course/course_detail.html'
     contex_object_name = 'course'
 
-class CourseCreate(CreateView):
+class CourseCreate(LoginRequiredMixin, CreateView):
     model = Course
     template_name = 'modules/common/form.html'
     fields = ['course_number', 'course_name', 'description']
     context_object_name = 'form'
 
 
-class CourseUpdate(UpdateView):
+class CourseUpdate(LoginRequiredMixin, UpdateView):
     model = Course
     template_name = 'modules/common/form.html'
     fields = ['course_number', 'course_name', 'description']
     context_object_name = 'form'
 
-class CourseDelete(DeleteView):
+class CourseDelete(LoginRequiredMixin, DeleteView):
     model = Course
     success_url = reverse_lazy('course:list')
 
-class SubjectDetail(DetailView):
+class SubjectDetail(LoginRequiredMixin, DetailView):
     model = ScoringSubject
     template_name = 'modules/course/subject.html'
     context_object_name = 'subject'
 
-class SubjectView(View):
+class SubjectView(LoginRequiredMixin, View):
     def get(self, request, pk):
         form = ScoringSubjectForm()
         return render(request, 'modules/common/form.html', {'form': form})
@@ -58,7 +61,7 @@ class SubjectView(View):
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
 
-class RegisterView(View):
+class RegisterView(LoginRequiredMixin, View):
     def get(self, request, pk):
         accept_type = request.META.get('HTTP_ACCEPT', 'text/html')
         course = get_object_or_404(Course, pk=pk)
@@ -92,6 +95,7 @@ class RegisterView(View):
         }
         return JsonResponse(response)
 
+@login_required
 def student_search(request, pk):
     course = get_object_or_404(Course, pk=pk)
     student_pk = request.GET.get('student', '')

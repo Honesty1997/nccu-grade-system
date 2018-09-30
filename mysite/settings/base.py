@@ -130,6 +130,7 @@ STATICFILES_DIRS = [
 ]
 
 # Auth setting overriding
+LOGIN_URL = '/account/login/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
