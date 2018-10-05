@@ -53,11 +53,6 @@ class User(AbstractBaseUser, Person, Timestamp):
     objects = UserManager()
     is_active = models.BooleanField(default=True)
 
-    @property
-    def role(self):
-        role_table = dict(self.ROLE_CHOICES)
-        return role_table[self.role_field]
-
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
@@ -69,10 +64,6 @@ class User(AbstractBaseUser, Person, Timestamp):
         return True
 
     @property
-    def is_staff(self):
-        return self.role_field == 4
-
-    @property
     def is_student(self):
         return self.role_field == 1
 
@@ -81,8 +72,12 @@ class User(AbstractBaseUser, Person, Timestamp):
         return self.role_field == 2
 
     @property
-    def is_admin(self):
+    def is_staff(self):
         return self.role_field == 3
+
+    @property
+    def is_admin(self):
+        return self.role_field == 4
 
     def __str__(self):
         return '[{}] {}'.format(self.role, self.name)

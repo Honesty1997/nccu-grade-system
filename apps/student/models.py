@@ -1,8 +1,7 @@
-# absolute import
 from django.db import models
 
-# relative import
 from mysite.models import Person, Timestamp
+
 # Create your models here.
 class Student(Person, Timestamp):
     FRESHMAN = 'FR'
@@ -20,7 +19,7 @@ class Student(Person, Timestamp):
         choices=YEAR_IN_SCHOOL_CHOICES,
         default=FRESHMAN,
     )
-    
+
     def info(self, **kwargs):
         info = super().info(**kwargs)
         info['pk'] = self.pk
