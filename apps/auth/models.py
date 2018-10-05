@@ -31,7 +31,6 @@ class UserManager(BaseUserManager):
         )
 
         user.role_field = 4
-        user.is_admin = True
         user.save()
         return user
 

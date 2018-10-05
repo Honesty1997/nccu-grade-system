@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import M from 'materialize-css';
 
-import SearchResults from './searchResults';
+import SearchResults from './SearchResults';
 
 export default class SearchPanel extends Component {
     public state;
@@ -42,7 +42,7 @@ export default class SearchPanel extends Component {
     }
 
     fetchSearchResults(studentId: String) : Promise<Response>{
-        const request_url = `/course/${this.props.courseId}/studentsearch?student=${studentId}`;
+        const requestUrl = `/course/${this.props.courseId}/studentsearch?student=${studentId}`;
         const headers = new Headers();
         headers.append('Content-type', 'application/json');
         headers.append('Accept', 'application/json');
@@ -52,7 +52,7 @@ export default class SearchPanel extends Component {
             headers,
         };
 
-        return fetch(request_url, init);
+        return fetch(requestUrl, init);
     }
 
     render() {
