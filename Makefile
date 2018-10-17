@@ -13,3 +13,5 @@ shell:
 	docker exec -it ${CONTAINER_NAME} bash
 clean:
 	rm -rf .docker-assets/db/data/*
+test:
+	python manage.py test -v 2

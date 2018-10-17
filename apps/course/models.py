@@ -1,8 +1,8 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 from mysite.models import BaseModel, Timestamp
 from apps.student.models import Student
-
 # Create your models here.
 class Course(BaseModel, Timestamp):
     course_number = models.CharField(
@@ -61,13 +61,19 @@ class Course(BaseModel, Timestamp):
         self.save()
         return self, count
 
-    def add_new_subject(self, title):
-        """
+    def add_new_subject(self, title: str):
+        """Add new subject to a Course.
+
             Args:
-                title String: The title of the new subject.
+                title str: The title of the new subject.
             Returns:
-                The ScoringSubject created.
+                ScoringSubject: The subject which is created.
+                created: Whether the subject is newly created.
+            Raises:
+                TypeError: When the argument is not string.
         """
+        if not isinstance(title, str):
+            raise TypeError('Title should be string.')
         obj, created = ScoringSubject.objects.get_or_create(title=title, course=self)
         if created:
             from apps.grade.models import Grade
@@ -75,7 +81,23 @@ class Course(BaseModel, Timestamp):
                 set_default_grade = Grade(
                     student=student, subject=obj, score=0)
                 set_default_grade.save()
-        return obj
+        return obj, created
+
+    # TODO: Please implement this function. The function should take the title of a ScoringSubject,
+    # and remove corresponding object in the database. Return the removed object as return value.
+    def remove_existing_subject(self, title):
+        """Remove a existing subject from a course.
+
+            Args:
+                title str: The title of the removed subject.
+            Returns:
+                The removed subject.
+            Raise:
+                TypeError: The argument is not str.
+                ObjectDoesNotExist: When the title object is not found.
+
+        """
+        return None
 
     def get_absolute_url(self):
         from django.shortcuts import reverse
@@ -92,7 +114,7 @@ class ScoringSubject(BaseModel, Timestamp):
         for subject in self.grade_set.all():
             total += subject.score
             count += 1
-        
+
         try:
             average = total / count
         except ZeroDivisionError:

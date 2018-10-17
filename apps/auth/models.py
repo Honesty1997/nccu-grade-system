@@ -57,13 +57,17 @@ class User(AbstractBaseUser, Person, Timestamp):
     objects = UserManager()
     is_active = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    # It is important to note the field is used by django admin.
+    # If the field is set to true, the user is allowed to access django admin.
     is_staff = models.BooleanField(default=False)
 
+    # TODO(honesty1997): Implement the function.
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
 
+    # TODO(honesty1997): Implement the function.
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
