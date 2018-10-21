@@ -83,7 +83,7 @@ class Course(BaseModel, Timestamp):
                 set_default_grade.save()
         return obj, created
 
-    # TODO: Please implement this function. The function should take the title of a ScoringSubject,
+    # TODO(3): Please implement this function. The function should take the title of a ScoringSubject,
     # and remove corresponding object in the database. Return the removed object as return value.
     def remove_existing_subject(self, title):
         """Remove a existing subject from a course.
