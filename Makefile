@@ -1,4 +1,4 @@
-.PHONY: dev-up dev-build dev-down dev-restart shell
+.PHONY: dev-up dev-build dev-down dev-restart shell clean
 CONTAINER_NAME = mysite-web
 
 dev-up:
