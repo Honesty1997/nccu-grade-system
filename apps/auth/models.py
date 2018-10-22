@@ -90,4 +90,4 @@ class User(AbstractBaseUser, Person, Timestamp):
         return self.role_field == 4
 
     def __str__(self):
-        return '[{}] {}'.format(self.role, self.name)
+        return '[{}] {}'.format(self.role_field, self.name)

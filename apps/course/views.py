@@ -57,7 +57,7 @@ class SubjectView(LoginRequiredMixin, View):
         form = ScoringSubjectForm(request.POST)
         if form.is_valid():
             course = get_object_or_404(Course, pk=pk)
-            subject = course.add_new_subject(form.cleaned_data['title'])
+            subject, _ = course.add_new_subject(form.cleaned_data['title'])
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
 

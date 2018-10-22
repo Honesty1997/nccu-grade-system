@@ -123,9 +123,7 @@ class ScoringSubject(BaseModel, Timestamp):
 
     def __str__(self):
         return '[{}]{}'.format(self.course, self.title)
-    
+
     def get_absolute_url(self):
         from django.shortcuts import reverse
         return reverse('course:subject', kwargs={'pk': self.pk })
-
-
