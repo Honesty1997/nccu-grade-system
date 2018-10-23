@@ -1,6 +1,6 @@
 .PHONY: dev-up dev-build dev-down dev-restart shell
 CONTAINER_NAME = mysite-web
-
+DB_NAME = mysite-db
 dev-up:
 	docker-compose -f ./docker/docker-compose.yml up
 dev-build:
@@ -11,6 +11,8 @@ dev-restart:
 	docker-compose -f ./docker/docker-compose.yml restart
 shell:
 	docker exec -it ${CONTAINER_NAME} bash
+dbshell:
+	docker exec -it ${DB_NAME} bash
 clean:
 	rm -rf .docker-assets/db/data/*
 test:

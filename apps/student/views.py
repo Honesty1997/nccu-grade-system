@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse
 from django.views.generic import DetailView, CreateView, UpdateView
 
+from apps.auth.models import User 
 from mysite.views import ListView
 from .models import Student
 # Create your views here.

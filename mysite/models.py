@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class BaseModel(models.Model):
     @classmethod
     def create(cls, **kwargs):
@@ -35,6 +34,7 @@ class Person(BaseModel):
     email = models.EmailField(unique=True)
     registered_date = models.DateField(blank=True, null=True)
     leave_date = models.DateField(blank=True, null=True)
+    user = models.OneToOneField('site_auth.User', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
@@ -42,6 +42,23 @@ class Person(BaseModel):
     @property
     def name(self):
         return '{} {}'.format(self.first_name, self.last_name)
+
+    def save(self, **kwargs):
+        from apps.auth.models import User
+        role_field_maping = {
+            'student': 1,
+            'professor': 2,
+            'executive': 3,
+            'admin': 4,
+        }
+        role = kwargs.get('role')
+        if self.pk is None:
+            if role != 4:
+                user = User.objects.create_user(self.email, self.phone_number)
+                user.role_field = role_field_maping[role]
+            else:
+                user = User.objects.create_superuser(self.email, self.phone_number)
+        super().save()
 
     class Meta:
         abstract = True

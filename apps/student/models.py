@@ -1,5 +1,6 @@
 from django.db import models
 
+from apps.auth.models import User
 from mysite.models import Person, Timestamp
 
 # Create your models here.
@@ -35,6 +36,10 @@ class Student(Person, Timestamp):
     def get_absolute_url(self):
         from django.shortcuts import reverse
         return reverse('student:detail', kwargs={'pk': self.pk})
+
+    def save(self):
+        student = super().save(role='student')
+        return student
 
     class Meta:
         ordering = ['id']

@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from mysite.models import BaseModel, Timestamp
 from apps.student.models import Student
+from apps.auth.models import User
 # Create your models here.
 class Course(BaseModel, Timestamp):
     course_number = models.CharField(
@@ -11,7 +12,7 @@ class Course(BaseModel, Timestamp):
         unique=True
     )
     course_name = models.CharField(max_length=50)
-    # teacher = models.ForeignKey()
+    teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
     registered_students = models.ManyToManyField(Student)
 
