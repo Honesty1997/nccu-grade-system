@@ -41,6 +41,7 @@ class Student(Person, Timestamp):
     def save(self):
         student = super().save(role='student')
 
+    # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_student_number():
         return 1
