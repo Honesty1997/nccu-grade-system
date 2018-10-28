@@ -29,14 +29,13 @@ class CourseDetail(LoginRequiredMixin, DetailView):
 class CourseCreate(LoginRequiredMixin, CreateView):
     model = Course
     template_name = 'modules/common/form.html'
-    fields = ['course_number', 'course_name', 'description']
+    fields = ['course_name', 'description']
     context_object_name = 'form'
-
 
 class CourseUpdate(LoginRequiredMixin, UpdateView):
     model = Course
     template_name = 'modules/common/form.html'
-    fields = ['course_number', 'course_name', 'description']
+    fields = ['course_name', 'description']
     context_object_name = 'form'
 
 class CourseDelete(LoginRequiredMixin, DeleteView):

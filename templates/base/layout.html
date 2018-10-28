@@ -24,12 +24,20 @@
 <body>
     {% include 'components/navbar.html'%}
     <main>
+<a id="prev" class="btn-floating btn-large waves-effect waves-light light-blue lighten-1"><i class="material-icons">arrow_back</i></a>
+{% comment %} <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-1"><i class="material-icons">arrow_forward</i></a> {% endcomment %}
+
         {% block main %}
 
         {% endblock %}
     </main>
     {% block custom_script %}
     {% endblock %}
-
+<script>
+    const prevButton = document.querySelector('#prev');
+    prevButton.addEventListener('click', (e) => {
+        history.back();
+    });
+</script>
 </body>
 </html>

@@ -6,11 +6,7 @@ from apps.student.models import Student
 from apps.auth.models import User
 # Create your models here.
 class Course(BaseModel, Timestamp):
-    course_number = models.CharField(
-        max_length=40,
-        db_index=True, 
-        unique=True
-    )
+    course_number = models.PositiveIntegerField(blank=True, null=True)
     course_name = models.CharField(max_length=50)
     teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
@@ -103,6 +99,14 @@ class Course(BaseModel, Timestamp):
     def get_absolute_url(self):
         from django.shortcuts import reverse
         return reverse('course:detail', kwargs={'pk': self.pk})
+
+    @staticmethod
+    def create_course_number():
+        return 1
+
+    def save(self):
+        self.course_number = Student.create_student_number()
+        super().save()
 
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)

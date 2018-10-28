@@ -5,6 +5,7 @@ from mysite.models import Person, Timestamp
 
 # Create your models here.
 class Student(Person, Timestamp):
+    student_number = models.PositiveIntegerField(blank=True, null=True)
     FRESHMAN = 'FR'
     SOPHOMORE = 'SO'
     JUNIOR = 'JR'
@@ -39,7 +40,10 @@ class Student(Person, Timestamp):
 
     def save(self):
         student = super().save(role='student')
-        return student
+
+    @staticmethod
+    def create_student_number():
+        return 1
 
     class Meta:
         ordering = ['id']
