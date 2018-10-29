@@ -6,3 +6,4 @@ class ScoringSubjectForm(ModelForm):
     class Meta:
         model = ScoringSubject
         fields = ['title']
+

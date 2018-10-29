@@ -3,6 +3,7 @@
 {% block main %}
     <h3><a href="{% url 'course:detail' subject.course.pk %}">{{ subject.course.course_name }}</a></h3>
     <h5>{{ subject.title }}</h5>
+    <a href="{% url 'course:delete_subject' subject.course.pk %}" class="waves-effect waves-light red btn edit-score">Delete Subject</a>
     {% if subject.grade_set %}
         <table>
             <thead>

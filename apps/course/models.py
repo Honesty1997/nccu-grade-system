@@ -97,7 +97,9 @@ class Course(BaseModel, Timestamp):
                 ObjectDoesNotExist: When the title object is not found.
 
         """
-        return None
+        # id_ = self.kwargs.get("pk")
+        # obj = ScoringSubject.objects.filter(pk=id_).delete()
+        # return reverse('course:subject')
 
     def get_absolute_url(self):
         from django.shortcuts import reverse
