@@ -23,7 +23,7 @@ class StudentCreate(CreateView):
     template_name = 'modules/common/form.html'
     context_object_name = 'form'
     fields = ['first_name', 'last_name', 'address',
-              'email', 'cellphone_number', 'year_in_school']
+              'email', 'cellphone_number', 'phone_number', 'year_in_school']
 
 class StudentUpdate(UpdateView):
     model = Student

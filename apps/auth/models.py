@@ -1,5 +1,7 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+
 from mysite.models import Person, Timestamp
 # Create your models here.
 
@@ -15,9 +17,9 @@ class UserManager(BaseUserManager):
         user = self.model(
             account=account,
         )
-
         user.set_password(password)
         user.is_superuser = False
+        user.is_active = settings.DEBUG == True
         user.save()
         return user
 
