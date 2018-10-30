@@ -39,7 +39,8 @@ class Student(Person, Timestamp):
         return reverse('student:detail', kwargs={'pk': self.pk})
 
     def save(self):
-        student = super().save(role='student')
+        self.student_number = Student.create_student_number()
+        super().save(role='student')
 
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod

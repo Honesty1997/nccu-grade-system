@@ -54,10 +54,11 @@ class Person(BaseModel):
         role = kwargs.get('role')
         if self.pk is None:
             if role != 4:
-                user = User.objects.create_user(self.email, self.phone_number)
+                user = User.objects.create_user(account=self.email, password=self.phone_number)
                 user.role_field = role_field_maping[role]
             else:
-                user = User.objects.create_superuser(self.email, self.phone_number)
+                user = User.objects.create_superuser(
+                    self.email, self.phone_number)
         super().save()
 
     class Meta:
