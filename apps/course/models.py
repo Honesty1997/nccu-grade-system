@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+import uuid
 
 from mysite.models import BaseModel, Timestamp
 from apps.student.models import Student
@@ -101,12 +102,15 @@ class Course(BaseModel, Timestamp):
         return reverse('course:detail', kwargs={'pk': self.pk})
 
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
+    num_list = ["{0:03}".format(i) for i in range(1, 100)]
     @staticmethod
     def create_course_number():
-        return 1
+        num = Course.num_list[0]
+        Course.num_list.remove(num)
+        return num
 
     def save(self):
-        self.course_number = Student.create_student_number()
+        self.course_number = Course.create_course_number()
         super().save()
 
 class ScoringSubject(BaseModel, Timestamp):
