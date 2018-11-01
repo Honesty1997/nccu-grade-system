@@ -6,6 +6,7 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 
 
 from mysite.views import ListView
@@ -29,13 +30,14 @@ class CourseDetail(LoginRequiredMixin, DetailView):
 class CourseCreate(LoginRequiredMixin, CreateView):
     model = Course
     template_name = 'modules/common/form.html'
-    fields = ['course_name', 'description']
+    fields = ['course_number', 'course_name', 'description']
     context_object_name = 'form'
+
 
 class CourseUpdate(LoginRequiredMixin, UpdateView):
     model = Course
     template_name = 'modules/common/form.html'
-    fields = ['course_name', 'description']
+    fields = ['course_number', 'course_name', 'description']
     context_object_name = 'form'
 
 class CourseDelete(LoginRequiredMixin, DeleteView):
@@ -59,6 +61,16 @@ class SubjectView(LoginRequiredMixin, View):
             subject, _ = course.add_new_subject(form.cleaned_data['title'])
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
+
+class SubjectDView(LoginRequiredMixin, DeleteView):
+    model = ScoringSubject
+    template_name = 'course/scoringsubject_confirm_delete.html'
+    # def get_object(self):
+    #     id_ = self.kwargs.get("pk")
+    #     return get_object_or_404(ScoringSubject, id=id_)
+    
+    # def get_success_url(self):
+    #     return reverse_lazy('course:subject')
 
 class RegisterView(LoginRequiredMixin, View):
     def get(self, request, pk):
