@@ -83,7 +83,7 @@ class Course(BaseModel, Timestamp):
 
     # TODO(3): Please implement this function. The function should take the title of a ScoringSubject,
     # and remove corresponding object in the database. Return the removed object as return value.
-    def remove_existing_subject(self, title):
+    def remove_existing_subject(self, title: str):
         """Remove a existing subject from a course.
 
             Args:
@@ -95,7 +95,12 @@ class Course(BaseModel, Timestamp):
                 ObjectDoesNotExist: When the title object is not found.
 
         """
-        return None
+        if not isinstance(title, str):
+            raise TypeError('Title should be string.')
+        removed_subject = ScoringSubject.objects.filter(title=title)
+        removed_subject.delete()
+        
+        return removed_subject
 
     def get_absolute_url(self):
         from django.shortcuts import reverse

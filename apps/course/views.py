@@ -62,15 +62,18 @@ class SubjectView(LoginRequiredMixin, View):
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
 
-class SubjectDView(LoginRequiredMixin, DeleteView):
-    model = ScoringSubject
-    template_name = 'course/scoringsubject_confirm_delete.html'
-    # def get_object(self):
-    #     id_ = self.kwargs.get("pk")
-    #     return get_object_or_404(ScoringSubject, id=id_)
+class SubjectDView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+            form = ScoringSubjectForm()
+            return render(request, 'modules/common/form.html', {'form': form})
     
-    # def get_success_url(self):
-    #     return reverse_lazy('course:subject')
+    def post(self, request, pk):
+        form = ScoringSubjectForm(request.POST)
+        if form.is_valid():
+            course = get_object_or_404(Course, pk=pk)
+            course.remove_existing_subject(form.cleaned_data['title'])
+            return redirect('course:detail', pk=pk)
+        return render(request, 'modules/common/form.html', {'form': form})
 
 class RegisterView(LoginRequiredMixin, View):
     def get(self, request, pk):
