@@ -7,11 +7,11 @@ from django.db import models
 # you see the attribute is necessary for this project.
 
 class Teacher(Person):
-    teacher_number = models.PositiveIntegerField(blank=True, null=True)
-    office = models.CharField(max_length=50)
-    belong_department = models.CharField(max_length=50)
-    is_chairman =  models.BooleanField(default=False)
-    year_in_school = models.CharField(max_length=2)
+    teacher_number = models.PositiveIntegerField(blank=True, null=True, unique=True)
+    office = models.CharField(max_length=50, blank=True)
+    belong_department = models.CharField(max_length=50, blank=True)
+    is_chairman =  models.BooleanField(default=False, blank=True)
+    year_in_school = models.CharField(max_length=2, blank=True)
 
     def info(self, **kwargs):
         info = super().info(**kwargs)
@@ -24,4 +24,7 @@ class Teacher(Person):
         info['year_in_school'] = self.year_in_school
         info['name'] = self.name
         return info
+
+    def save(self):
+        teacher = super().save(role='teacher')
     

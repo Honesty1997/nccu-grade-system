@@ -50,6 +50,7 @@ class Person(BaseModel):
             'professor': 2,
             'executive': 3,
             'admin': 4,
+            'teacher': 5,
         }
         role = kwargs.get('role')
         if self.pk is None:
