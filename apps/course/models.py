@@ -7,7 +7,7 @@ from apps.student.models import Student
 from apps.auth.models import User
 # Create your models here.
 class Course(BaseModel, Timestamp):
-    course_number = models.PositiveIntegerField(blank=True, null=True)
+    course_number = models.CharField(max_length=10, null=True)
     course_name = models.CharField(max_length=50)
     teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
@@ -98,8 +98,11 @@ class Course(BaseModel, Timestamp):
         if not isinstance(title, str):
             raise TypeError('Title should be string.')
         removed_subject = ScoringSubject.objects.filter(title=title)
-        removed_subject.delete()
-        
+        if removed_subject:
+            removed_subject.delete()
+        else:
+            raise ValueError('Subject Does not Exist.')
+    
         return removed_subject
 
     def get_absolute_url(self):
@@ -107,15 +110,16 @@ class Course(BaseModel, Timestamp):
         return reverse('course:detail', kwargs={'pk': self.pk})
 
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
-    num_list = ["{0:03}".format(i) for i in range(1, 100)]
     @staticmethod
     def create_course_number():
-        num = Course.num_list[0]
-        Course.num_list.remove(num)
-        return num
-
+        num_list = ['{:03}'.format(i) for i in range(101, 1000)]
+        for num in num_list:
+            if not Course.objects.filter(course_number=num):
+                return num
+    
     def save(self):
-        self.course_number = Course.create_course_number()
+        if self.course_number is None:
+            self.course_number = Course.create_course_number()
         super().save()
 
 class ScoringSubject(BaseModel, Timestamp):
