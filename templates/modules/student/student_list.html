@@ -3,7 +3,7 @@
 {% block main %}
 <section style="display: flex; justify-content: end;">
     <!-- TODO(3) Only the admin can see the add student button too. -->
-    {% if user.is_student or user.is_admin %}
+    {% if user.is_admin %}
         <a href="{% url 'student:create' %}" class="btn" style="margin-right:5px;">Add a Student</a>
     {% endif %}
 </section>

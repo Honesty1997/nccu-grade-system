@@ -7,4 +7,21 @@ from django.db import models
 # you see the attribute is necessary for this project.
 
 class Teacher(Person):
-    pass
+    teacher_number = models.PositiveIntegerField(blank=True, null=True)
+    office = models.CharField(max_length=50)
+    belong_department = models.CharField(max_length=50)
+    is_chairman =  models.BooleanField(default=False)
+    year_in_school = models.CharField(max_length=2)
+
+    def info(self, **kwargs):
+        info = super().info(**kwargs)
+        info['pk'] = self.pk
+        info['first_name'] = self.first_name
+        info['last_name'] = self.last_name
+        info['address'] = self.address
+        info['cellphone_number'] = self.cellphone_number
+        info['email'] = self.email
+        info['year_in_school'] = self.year_in_school
+        info['name'] = self.name
+        return info
+    
