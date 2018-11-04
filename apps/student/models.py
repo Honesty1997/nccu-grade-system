@@ -39,13 +39,21 @@ class Student(Person, Timestamp):
         return reverse('student:detail', kwargs={'pk': self.pk})
 
     def save(self):
-        self.student_number = Student.create_student_number()
-        super().save(role='student')
+        student = super().save(role='student')
 
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_student_number():
-        return 1
+        try:
+            year = str(self.year_in_school)
+            sid = str(self.pk)
+            blank = '0'
+            n = year + blank + sid
+            n = int(n)
+        except:
+            n = 1
+        return n
+
 
     class Meta:
         ordering = ['id']
