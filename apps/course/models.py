@@ -94,6 +94,9 @@ class Course(BaseModel, Timestamp):
                 ObjectDoesNotExist: When the title object is not found.
 
         """
+        if not isinstance(title, str):
+            raise TypeError('Title should be string.')
+        
         return None
 
     def get_absolute_url(self):
