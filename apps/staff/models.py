@@ -5,5 +5,6 @@ from mysite.models import Person, Timestamp
 # that class as base class. Add any attribute you want if 
 # you see the attribute is necessary for this project.
 
-class Teacher(Person, Timestamp):
+class Teacher(models.Model):
     pass
+ 

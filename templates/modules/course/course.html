@@ -7,7 +7,9 @@
         As a plus, you can also modify the view function to only allow admin to access 
         the webpage.
      -->
+    {% if request.user.is_superuser %}
     <a  href="{% url 'course:create' %}" class="btn">Add a Course</a>
+    {% endif %}
 </section>
 <section>
     <ul class="collection">

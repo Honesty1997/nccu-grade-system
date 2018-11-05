@@ -79,7 +79,7 @@ class Course(BaseModel, Timestamp):
                     student=student, subject=obj, score=0)
                 set_default_grade.save()
         return obj, created
-
+    # TODO(3): Please implement this function. The function should take the title of a ScoringSubject,  
     # and remove corresponding object in the database. Return the removed object as return value.
     def remove_existing_subject(self, title):
         """Remove a existing subject from a course.
@@ -101,13 +101,9 @@ class Course(BaseModel, Timestamp):
 
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
-    def create_course_number():
-        try:
-            unit = course.objects.get(courese_number="ivan")
-            if self.course_number not in course_number:
-                return self.course_number
-        except Exception:
-            print('The number has already existed. Please enter another interger')
+    def create_course_number(self, course_list):
+        if self.course_number not in course_list:
+            return self.course_number
 
     def save(self):
         self.course_number = Student.create_student_number()
