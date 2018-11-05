@@ -4,6 +4,7 @@
 <section style="display: flex; justify-content: end;">
     <a href="{% url 'course:register' course.id %}" class="btn" style="margin-right:5px;">Manage Students</a>
     <a href="{% url 'course:create_subject' course.id %}" class="btn" style="margin-right:5px;">Add New Subject</a>
+    <a href="{% url 'course:delete_subject' course.id %}" class="btn" style="margin-right:5px;>Delete the Subject</a>
     <a href="{% url 'course:update' course.id %}" class="btn" style="margin-right:5px;">Edit the Course</a>
     <a href="{% url 'course:delete' course.id %}" class="btn">Delete the Course</a>
 </section>

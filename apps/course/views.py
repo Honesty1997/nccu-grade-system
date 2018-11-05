@@ -60,6 +60,19 @@ class SubjectView(LoginRequiredMixin, View):
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
 
+class SubjectDelete(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        form = ScoringSubjectForm()
+        return render(request, 'modules/common/form.html', {'form': form})
+
+    def post(self, request, pk):
+        form = ScoringSubjectForm(request.POST)
+        if form.is_valid():
+            course = get_object_or_404(Course, pk=pk)
+            course.remove_existing_subject(form.cleaned_data['title'])
+            return redirect('course:detail', pk=pk)
+        return render(request, 'modules/common/form.html', {'form': form})
+
 class RegisterView(LoginRequiredMixin, View):
     def get(self, request, pk):
         accept_type = request.META.get('HTTP_ACCEPT', 'text/html')

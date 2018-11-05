@@ -96,8 +96,12 @@ class Course(BaseModel, Timestamp):
         """
         if not isinstance(title, str):
             raise TypeError('Title should be string.')
-        
-        return None
+        Remove_Subject = ScoringSubject.objects.filter(title=title)
+        if Remove_Subject:
+            Remove_Subject.delete()
+        else:
+            raise ValueError('When the title object is not found.')
+        return Remove_Subject
 
     def get_absolute_url(self):
         from django.shortcuts import reverse
