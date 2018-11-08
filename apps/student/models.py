@@ -45,7 +45,10 @@ class Student(Person, Timestamp):
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_student_number():
-        return 1
+        stu_num_list = [i for i in range(100000000, 109999999)]
+        for num in stu_num_list:
+            if not Student.objects.filter(student_number=num):
+                return num
 
     class Meta:
         ordering = ['id']

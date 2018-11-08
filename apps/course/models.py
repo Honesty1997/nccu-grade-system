@@ -5,6 +5,7 @@ import uuid
 from mysite.models import BaseModel, Timestamp
 from apps.student.models import Student
 from apps.auth.models import User
+from apps.staff.models import Teacher
 # Create your models here.
 class Course(BaseModel, Timestamp):
     course_number = models.CharField(max_length=10, null=True)
@@ -12,6 +13,7 @@ class Course(BaseModel, Timestamp):
     teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
     registered_students = models.ManyToManyField(Student)
+    teachers_responsible = models.ManyToManyField(Teacher)
 
     def __str__(self):
         return self.course_name
@@ -112,7 +114,7 @@ class Course(BaseModel, Timestamp):
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_course_number():
-        num_list = ['{:03}'.format(i) for i in range(101, 1000)]
+        num_list = ['{:03}'.format(i) for i in range(1, 1000)]
         for num in num_list:
             if not Course.objects.filter(course_number=num):
                 return num
