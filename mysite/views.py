@@ -12,3 +12,8 @@ def home_page(request):
         if user.is_student:
             pass
         return render(request, 'modules/index/index.html')
+
+class OwnCourseListView(ListView):
+    def get_queryset(self):
+        user = self.request.user
+        return self.model.objects.filter()

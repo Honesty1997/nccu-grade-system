@@ -7,7 +7,9 @@
         As a plus, you can also modify the view function to only allow admin to access 
         the webpage.
      -->
-    <a  href="{% url 'course:create' %}" class="btn">Add a Course</a>
+     {% if user.is_admin or user.is_execitive %}
+    <a  href="{% url 'course:create' %}" class="btn">新增課程</a>
+    {% endif %}
 </section>
 <section>
     <ul class="collection">
@@ -17,7 +19,7 @@
                         <h5>{{ course.course_name }} ({{ course.course_number}})</h5>
                     </a>
                 <p>{{ course.description }}</p>
-                <p>Registered Number: {{ course.registered_students.all | length }}</p>
+                <p>課程人數: {{ course.registered_students.all | length }}</p>
             </li>
         {% endfor %}
     </ul>

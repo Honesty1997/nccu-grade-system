@@ -2,10 +2,10 @@
 
 {% block main %}
 <section style="display: flex; justify-content: end;">
-    <a href="{% url 'course:register' course.id %}" class="btn" style="margin-right:5px;">Manage Students</a>
-    <a href="{% url 'course:create_subject' course.id %}" class="btn" style="margin-right:5px;">Add New Subject</a>
-    <a href="{% url 'course:update' course.id %}" class="btn" style="margin-right:5px;">Edit the Course</a>
-    <a href="{% url 'course:delete' course.id %}" class="btn">Delete the Course</a>
+    <a href="{% url 'course:register' course.id %}" class="btn" style="margin-right:5px;">學生管理</a>
+    <a href="{% url 'course:create_subject' course.id %}" class="btn" style="margin-right:5px;">新增項目</a>
+    <a href="{% url 'course:update' course.id %}" class="btn" style="margin-right:5px;">編輯課程</a>
+    <a href="{% url 'course:delete' course.id %}" class="btn">刪除課程</a>
 </section>
     <h2>{{ course.course_name }}({{ course.course_number}})</h2>
     <p>{{ course.description }}</p>
@@ -14,7 +14,7 @@
             {% if course.scoringsubject_set %}
                 <ul class="collection with-header">
                     <li class="collection-header">
-                        <h4>Subject List</h4>
+                        <h4>成績列表</h4>
                     </li>
                     {% for subject in course.scoringsubject_set.all %}
                         <a class="collection-item" href="{% url 'course:subject' subject.pk %}">{{ subject.title }}</a>
@@ -26,7 +26,7 @@
             {% if course.registered_students %}
                 <ul class="collection with-header">
                     <li class="collection-header">
-                        <h4>Student List</h4>
+                        <h4>學生名單</h4>
                     </li>
                     {% for student in course.registered_students.all %}
                         <a class="collection-item" href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>
