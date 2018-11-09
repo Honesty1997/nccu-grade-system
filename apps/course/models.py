@@ -4,11 +4,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from mysite.models import BaseModel, Timestamp
 from apps.student.models import Student
 from apps.auth.models import User
+from apps.staff.models import Teacher
+
 # Create your models here.
 class Course(BaseModel, Timestamp):
     course_number = models.PositiveIntegerField(blank=True, null=True)
     course_name = models.CharField(max_length=50)
-    teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
     registered_students = models.ManyToManyField(Student)
 
@@ -82,7 +84,7 @@ class Course(BaseModel, Timestamp):
 
     # TODO(3): Please implement this function. The function should take the title of a ScoringSubject,
     # and remove corresponding object in the database. Return the removed object as return value.
-    def remove_existing_subject(self, title):
+    def remove_existing_subject(self, title: str):
         """Remove a existing subject from a course.
 
             Args:
@@ -94,7 +96,10 @@ class Course(BaseModel, Timestamp):
                 ObjectDoesNotExist: When the title object is not found.
 
         """
-        return None
+        if not isinstance(title, str):
+            raise TypeError('Title should be string.')
+        obj, created = ScoringSubject.objects.delete()
+        return       
 
     def get_absolute_url(self):
         from django.shortcuts import reverse
@@ -104,12 +109,16 @@ class Course(BaseModel, Timestamp):
     @staticmethod
     def create_course_number():
         try:
-            pass
+            all = [f"{i:04}" for i in range(120)]
+            for a in all:
+                format()
+
         except:
-            pass
+            n = 123
+        return n          
 
     def save(self):
-        self.course_number = Student.create_student_number()
+        self.course_number = Course.create_course_number()
         super().save()
 
 class ScoringSubject(BaseModel, Timestamp):

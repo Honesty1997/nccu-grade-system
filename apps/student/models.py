@@ -40,6 +40,7 @@ class Student(Person, Timestamp):
 
     def save(self):
         student = super().save(role='student')
+        student_number = create_student_number()
 
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
@@ -53,6 +54,7 @@ class Student(Person, Timestamp):
         except:
             n = 1
         return n
+    
 
 
     class Meta:
