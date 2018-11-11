@@ -26,12 +26,12 @@ class Timestamp(models.Model):
         abstract = True
 
 class Person(BaseModel):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    address = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=50)
-    cellphone_number = models.CharField(max_length=50, blank=True)
-    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=30, null=True)
+    last_name = models.CharField(max_length=30, null=True)
+    address = models.CharField(max_length=100, null=True)
+    phone_number = models.CharField(max_length=50, null=True)
+    cellphone_number = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(unique=True, null=True)
     registered_date = models.DateField(blank=True, null=True)
     leave_date = models.DateField(blank=True, null=True)
     user = models.OneToOneField('site_auth.User', on_delete=models.CASCADE, null=True, blank=True)
