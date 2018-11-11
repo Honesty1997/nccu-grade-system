@@ -45,7 +45,9 @@ class Student(Person, Timestamp):
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_student_number():
-        return 1
-
+        last_student = Student.objects.all().reverse()[0]
+        stu_num = last_student.student_number + 1
+        return stu_num
+    
     class Meta:
         ordering = ['id']

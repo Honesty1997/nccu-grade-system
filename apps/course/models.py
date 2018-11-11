@@ -110,10 +110,12 @@ class Course(BaseModel, Timestamp):
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_course_number():
-        return 1
+        last_course = Course.objects.all().reverse()[0]
+        course_num = last_course.course_number + 1
+        return course_num
 
     def save(self):
-        self.course_number = Student.create_student_number()
+        self.course_number = Course.create_course_number()
         super().save()
 
 class ScoringSubject(BaseModel, Timestamp):
