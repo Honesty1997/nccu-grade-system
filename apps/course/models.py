@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -8,6 +10,7 @@ from apps.staff.models import Teacher
 
 # Create your models here.
 class Course(BaseModel, Timestamp):
+    numb = 0
     course_number = models.PositiveIntegerField(blank=True, null=True)
     course_name = models.CharField(max_length=50)
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
@@ -108,13 +111,14 @@ class Course(BaseModel, Timestamp):
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_course_number():
-        try:
-            all = [f"{i:04}" for i in range(120)]
-            for a in all:
-                format()
-
-        except:
-            n = 123
+        index = Course.numb
+        n = "{0:0>3}".format(index)
+        Course.numb += 1
+        now = datetime.datetime.now()
+        year = str(now.year)
+        n = year + n
+        n = int(n)
+    
         return n          
 
     def save(self):
