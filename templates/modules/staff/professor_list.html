@@ -1,0 +1,18 @@
+{% extends 'base/layout.html' %}
+
+{% block main %}
+<section style="display: flex; justify-content: end;">
+    <!-- Only the admin can see the add professor button too. -->
+    {% if request.user.is_superuser %}
+    <a href="{% url 'staff:create' %}" class="btn" style="margin-right:5px;">Add a professor</a>
+    {% endif %}
+</section>
+<ul class="collection">
+    {% for professor in professor_list %}
+    <li class="collection-item">
+        <a href="{% url 'staff:detail' professor.pk %}">{{ professor.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% include "components/paginator.html" %}
+{% endblock %}

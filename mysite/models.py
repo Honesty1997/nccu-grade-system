@@ -36,6 +36,7 @@ class Person(BaseModel):
     leave_date = models.DateField(blank=True, null=True)
     user = models.OneToOneField('site_auth.User', on_delete=models.CASCADE, null=True, blank=True)
 
+    #資料項目顯示name
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
 

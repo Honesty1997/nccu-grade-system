@@ -9,6 +9,7 @@
             {% if user.is_authenticated %}
                 {% if user.is_professor or user.is_admin %}
                     <li><a href="{% url 'course:list' %}">Courses</a></li>
+                    <li><a href="{% url 'staff:list' %}">Professors</a></li>
                 {% endif %}
                 {% if user.is_student or user.is_admin %}
                     <li><a href="{% url 'student:list' %}">Students</a></li>
