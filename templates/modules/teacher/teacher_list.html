@@ -1,0 +1,17 @@
+{% extends 'base/layout.html' %}
+
+{% block main %}
+<section style="display: flex; justify-content: end;">
+    {% if user.is_admin %}
+    <a href="{% url 'teacher:create' %}" class="btn" style="margin-right:5px;">Add a Teacher</a>
+    {% endif %}
+</section>
+<ul class="collection">
+    {% for teacher in teacher_list %}
+    <li class="collection-item">
+        <a href="{% url 'teacher:detail' teacher.pk %}">{{ teacher.name }}</a> 
+    </li>
+    {% endfor %}
+</ul>
+{% include "components/paginator.html" %}
+{% endblock %}
