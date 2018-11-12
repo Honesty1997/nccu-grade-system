@@ -13,7 +13,6 @@ class Course(BaseModel, Timestamp):
     teacher = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
     registered_students = models.ManyToManyField(Student)
-    teachers_responsible = models.ManyToManyField(Teacher)
 
     def __str__(self):
         return self.course_name
@@ -59,7 +58,7 @@ class Course(BaseModel, Timestamp):
                     student_grade = Grade.objects.get(student=student, subject=subject)
                     student_grade.delete()
         self.save()
-        return self, count
+        return self, count   
 
     def add_new_subject(self, title: str):
         """Add new subject to a Course.

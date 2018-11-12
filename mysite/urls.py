@@ -22,6 +22,7 @@ import apps.course.urls as course_routes
 import apps.student.urls as student_routes
 import apps.grade.urls as grade_routes
 import apps.auth.urls as auth_routes
+import apps.staff.urls as staff_routes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('course/', include(course_routes)),
     path('student/', include(student_routes)),
     path('grade/', include(grade_routes)),
+    path('teacher/', include(staff_routes)),
     path('', login_required(TemplateView.as_view(template_name='modules/index/index.html')), name='homepage'),
 ]

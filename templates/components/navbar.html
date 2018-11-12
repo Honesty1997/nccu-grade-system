@@ -13,6 +13,9 @@
                 {% if user.is_student or user.is_admin %}
                     <li><a href="{% url 'student:list' %}">Students</a></li>
                 {% endif %}
+                {% if user.is_professor or user.is_admin %}
+                    <li><a href="{% url 'staff:list' %}">Teachers</a></li>
+                {% endif %}
                     <li><a href="{% url 'auth:logout' %}">Log out</a></li>
             {% else %}
                 <li><a href="{% url 'auth:login' %}">Log In</a></li>
