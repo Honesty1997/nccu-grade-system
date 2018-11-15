@@ -7,7 +7,7 @@
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <!-- TODO(2): Reference -->
             {% if user.is_authenticated %}
-                {% if user.is_professor or user.is_admin %}
+                {% if user.is_professor or user.is_admin or user.is_student %}
                     <li><a href="{% url 'course:list' %}">Courses</a></li>
                 {% endif %}
                 {% if user.is_student or user.is_admin %}

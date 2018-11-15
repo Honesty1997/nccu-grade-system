@@ -22,7 +22,9 @@
                         {{ grade.score }}
                     </td>
                     <td>
-                        <a data-id="{{ grade.id }}" class="waves-effect waves-light btn edit-score">edit</a>
+                        {% if not user.is_student %}
+                            <a data-id="{{ grade.id }}" class="waves-effect waves-light btn edit-score">edit</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
