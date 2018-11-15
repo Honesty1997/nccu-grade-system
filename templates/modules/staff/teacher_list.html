@@ -9,7 +9,7 @@
 <ul class="collection">
     {% for teacher in teacher_list %}
     <li class="collection-item">
-        <a href="{% url 'homepage' %}">{{ teacher.name }}</a>
+        <a href="{% url 'staff:detail' teacher.pk %}">{{ teacher.name }}</a>
     </li>
     {% endfor %}
 </ul>
