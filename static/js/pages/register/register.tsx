@@ -32,7 +32,7 @@ class Register extends Component {
                 this.setState({ studentList: data.studentList });
             })
             .catch((err) => {
-                M.toast({ html: 'error', classes: 'red' });
+                M.toast({ html: '錯誤', classes: 'red' });
             });
     }
 

@@ -23,7 +23,7 @@ export default class ManagePanel extends Component {
                 }
             })
             .catch((err) => {
-                M.toast({ html: 'error', classes: 'red' });
+                M.toast({ html: '錯誤', classes: 'red' });
             });
     }
 
@@ -34,7 +34,7 @@ export default class ManagePanel extends Component {
                     { student.name }
                     <button className="secondary-content btn-small student-add-button"
                         onClick={() => { this.onClick(student) }}
-                    >remove</button>
+                    >移除</button>
                 </li>
             );
         });
@@ -43,9 +43,9 @@ export default class ManagePanel extends Component {
             <div className="col m6 s12">
                 <ul className="collection with-header">
                     <li className="collection-item">
-                        <h4>Registered Students</h4>
+                        <h4>已經註冊的學生</h4>
                     </li>
-                    { studentList }
+                    { studentList.length == 0 ? '沒有學生': studentList }
                 </ul>
             </div>
         )

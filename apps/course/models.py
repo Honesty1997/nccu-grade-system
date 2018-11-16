@@ -112,6 +112,11 @@ class Course(BaseModel, Timestamp):
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    SUBJECT_TYPE = (
+        ('Q', '小考'),
+        ('H', '作業'),
+    )
+    subject_type = models.CharField(max_length=2, null=True, choices=SUBJECT_TYPE)
 
     @property
     def average(self):

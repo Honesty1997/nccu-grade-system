@@ -16,9 +16,13 @@
                     <li class="collection-header">
                         <h4>成績列表</h4>
                     </li>
-                    {% for subject in course.scoringsubject_set.all %}
-                        <a class="collection-item" href="{% url 'course:subject' subject.pk %}">{{ subject.title }}</a>
-                    {% endfor %}
+                    {% if course.scoringsubject_set.all %}
+                        {% for subject in course.scoringsubject_set.all %}
+                            <a class="collection-item" href="{% url 'course:subject' subject.pk %}">{{ subject.title }}</a>
+                        {% endfor %}
+                    {% else %}
+                        <p class='no-item'>無相關項目。</p>
+                    {% endif %}
                 </ul>
             {% endif %}
         </div>
@@ -28,9 +32,13 @@
                     <li class="collection-header">
                         <h4>學生名單</h4>
                     </li>
-                    {% for student in course.registered_students.all %}
-                        <a class="collection-item" href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>
-                    {% endfor %}
+                    {% if course.registered_students.all%}
+                        {% for student in course.registered_students.all %}
+                            <a class="collection-item" href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>
+                        {% endfor %}
+                    {% else %}
+                        <p class='no-item'>還沒有學生。</p>
+                    {% endif %}
                 </ul>
             {% endif %}
         </div>
