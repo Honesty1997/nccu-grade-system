@@ -43,12 +43,12 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, Timestamp):
     STUDENT = 1
-    PROFESSOR = 2
+    TEACHER = 2
     EXECUTIVE = 3
     ADMIN = 4
     ROLE_CHOICES = (
         (STUDENT, 'Student'),
-        (PROFESSOR, 'Professor'),
+        (TEACHER, 'Teacher'),
         (EXECUTIVE, 'Executive'),
         (ADMIN, 'Admin')
     )
@@ -80,7 +80,7 @@ class User(AbstractBaseUser, Timestamp):
         return self.role_field == 1
 
     @property
-    def is_professor(self):
+    def is_teacher(self):
         return self.role_field == 2
 
     @property

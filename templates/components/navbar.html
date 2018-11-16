@@ -1,6 +1,6 @@
 <nav class="light-blue darken-3">
     <div class="nav-wrapper">
-        <a href="{% url 'homepage' %}" class="brand-logo right">成績管理系統</a>
+        <a href="{% url 'main:homepage' %}" class="brand-logo right">成績管理系統</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             {% if user.is_authenticated %}
                 {% if user.is_admin %}

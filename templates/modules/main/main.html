@@ -1,0 +1,15 @@
+{% extends 'base/layout.html' %}
+{% block main %}
+    {% if user.is_student %}
+    <p>Hi student</p>
+    {% elif user.is_professor %}
+    <p>Hi professor</p>
+    {% elif user.is_admin %}
+    <p>Hi admin</p>
+    {% endif %}
+
+    {% for course in course_list %}
+        {{ course.course_name }}
+    {% endfor %}
+
+{% endblock %}

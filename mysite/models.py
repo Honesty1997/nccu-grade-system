@@ -47,7 +47,7 @@ class Person(BaseModel):
         from apps.auth.models import User
         role_field_maping = {
             'student': 1,
-            'professor': 2,
+            'teacher': 2,
             'executive': 3,
             'admin': 4,
         }

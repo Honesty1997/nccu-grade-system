@@ -7,12 +7,6 @@ class ListView(LV):
         context['base_url'] = self.base_url
         return context
 
-def home_page(request):
-    if request.user.is_authenticated():
-        if user.is_student:
-            pass
-        return render(request, 'modules/index/index.html')
-
 class OwnCourseListView(ListView):
     def get_queryset(self):
         user = self.request.user

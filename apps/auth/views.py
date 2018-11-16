@@ -39,4 +39,4 @@ class ChangePassword(View):
                 logout(request)
             return HttpResponseRedirect(reverse('homepage'))
         else:
-            return render(request, 'modules/auth/change_password', form)
+            return render(request, 'modules/auth/change_password.html', { 'form': form })

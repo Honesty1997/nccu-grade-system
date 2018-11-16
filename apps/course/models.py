@@ -11,7 +11,7 @@ class Course(BaseModel, Timestamp):
     course_name = models.CharField(max_length=50)
     description = models.TextField()
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
-    registered_students = models.ManyToManyField(Student)
+    registered_students = models.ManyToManyField(Student, blank=True)
 
     def __str__(self):
         return self.course_name
@@ -81,8 +81,6 @@ class Course(BaseModel, Timestamp):
                 set_default_grade.save()
         return obj, created
 
-    # TODO(3): Please implement this function. The function should take the title of a ScoringSubject,
-    # and remove corresponding object in the database. Return the removed object as return value.
     def remove_existing_subject(self, title):
         """Remove a existing subject from a course.
 
