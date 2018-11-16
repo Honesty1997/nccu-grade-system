@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth import get_user_model
 class BaseModel(models.Model):
     @classmethod
     def create(cls, **kwargs):
@@ -56,9 +56,11 @@ class Person(BaseModel):
             if role != 4:
                 user = User.objects.create_user(account=self.email, password=self.phone_number)
                 user.role_field = role_field_maping[role]
+                self.user = user
             else:
                 user = User.objects.create_superuser(
                     self.email, self.phone_number)
+                self.user = user
         super().save()
 
     class Meta:

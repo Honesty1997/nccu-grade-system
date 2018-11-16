@@ -1,5 +1,5 @@
-from django.shortcuts import render, reverse
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.shortcuts import render, reverse, get_object_or_404
+from django.views.generic import DetailView, CreateView, UpdateView, View
 
 from apps.auth.models import User 
 from mysite.views import ListView

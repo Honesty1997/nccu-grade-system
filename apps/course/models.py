@@ -9,8 +9,8 @@ from apps.auth.models import User
 class Course(BaseModel, Timestamp):
     course_number = models.PositiveIntegerField(blank=True, null=True)
     course_name = models.CharField(max_length=50)
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
     registered_students = models.ManyToManyField(Student)
 
     def __str__(self):

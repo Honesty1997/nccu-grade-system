@@ -5,6 +5,7 @@
     {% if user.is_admin %}
             <section style="display: flex; justify-content: end;">
                 <a href="{% url 'student:update' student.pk %}" class="btn" style="margin-right:5px;">編輯</a>
+                <a href="{% url 'auth:change-password' student.user.pk %}" class="btn" style="margin-right:5px;">更改密碼</a>
             </section>
             <h4>{{ student.name }}</h4>
         {% endif %}
