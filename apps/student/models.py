@@ -44,7 +44,7 @@ class Student(Person, Timestamp):
 
     @staticmethod
     def create_student_number():
-        return 1
+        return 2
 
     class Meta:
         ordering = ['id']
