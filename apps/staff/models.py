@@ -28,7 +28,7 @@ class Teacher(Person, Timestamp):
 
     @staticmethod
     def create_teacher_number():
-        t_num_list = [i for i in range(200000000, 209999999)]
+        t_num_list = [i for i in range(207000001, 207999999)]
         for num in t_num_list:
             if not Teacher.objects.filter(teacher_number=num):
                 return num

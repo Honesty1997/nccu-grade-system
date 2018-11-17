@@ -8,11 +8,11 @@ from apps.auth.models import User
 from apps.staff.models import Teacher
 # Create your models here.
 class Course(BaseModel, Timestamp):
-    course_number = models.CharField(max_length=10, null=True)
+    course_number = models.CharField(max_length=10, blank=True, null=True)
     course_name = models.CharField(max_length=50)
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField()
-    registered_students = models.ManyToManyField(Student)
+    registered_students = models.ManyToManyField(Student, blank=True)
 
     def __str__(self):
         return self.course_name
@@ -136,7 +136,7 @@ class ScoringSubject(BaseModel, Timestamp):
             count += 1
 
         try:
-            average = total / count
+            average = round(total / count, 2)
         except ZeroDivisionError:
             average = 0
         return average
