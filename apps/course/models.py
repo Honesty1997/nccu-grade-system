@@ -93,7 +93,15 @@ class Course(BaseModel, Timestamp):
                 ObjectDoesNotExist: When the title object is not found.
 
         """
-        return None
+        if not isinstance(title, str):
+            raise TypeError('Title should be string.')
+        removed_subject = ScoringSubject.objects.filter(title=title)
+        if removed_subject:
+            removed_subject.delete()
+        else:
+            raise ValueError('Subject Does not Exist.')
+    
+        return removed_subject
 
     def get_absolute_url(self):
         from django.shortcuts import reverse
@@ -101,10 +109,14 @@ class Course(BaseModel, Timestamp):
 
     @staticmethod
     def create_course_number():
-        return 1
+        num_list = [i for i in range(1, 1000)]
+        for num in num_list:
+            if not Course.objects.filter(course_number=num):
+                return num
 
     def save(self):
-        self.course_number = Student.create_student_number()
+        if self.course_number is None:
+            self.course_number = Course.create_course_number()
         super().save()
 
 class ScoringSubject(BaseModel, Timestamp):

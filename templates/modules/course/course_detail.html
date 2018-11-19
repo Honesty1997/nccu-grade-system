@@ -4,6 +4,7 @@
 <section style="display: flex; justify-content: end;">
     <a href="{% url 'course:register' course.id %}" class="btn" style="margin-right:5px;">學生管理</a>
     <a href="{% url 'course:create_subject' course.id %}" class="btn" style="margin-right:5px;">新增項目</a>
+    <a href="{% url 'course:delete_subject' course.id %}" class="btn" style="margin-right:5px;">刪除項目</a>
     <a href="{% url 'course:update' course.id %}" class="btn" style="margin-right:5px;">編輯課程</a>
     <a href="{% url 'course:delete' course.id %}" class="btn">刪除課程</a>
 </section>

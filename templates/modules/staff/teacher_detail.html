@@ -1,0 +1,65 @@
+{% extends 'base/layout.html' %}
+{% block main %}
+<div class="card">
+    <div class="card-content">
+        {% comment %}
+        <section style="display: flex; justify-content: end;">
+            <a href="{% url 'student:update' student.pk %}" class="btn" style="margin-right:5px;">Edit</a>
+        </section> 
+        {% endcomment %}
+        <h4>{{ teacher.name }}</h4>
+    </div>
+    <div class="card-tabs">
+        <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a href="#teacher-info">Info</a></li>
+            <li class="tab"><a href="#teacher-course">Courses</a></li>
+        </ul>
+    </div>
+    <div class="card-content grey lighten-4">
+        <div id="teacher-info">
+            <div class="divider"></div>
+            <div class="section">
+                <h5>Teacher Number</h5>
+                <p>{{ teacher.teacher_number }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>Address</h5>
+                <p>{{ teacher.address }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>Email</h5>
+                <p>{{ teacher.email }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>Phone</h5>
+                <p>{{ teacher.phone_number }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>Cellphone Number</h5>
+                <p>{{ teacher.cellphone_number }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>Registered Date</h5>
+                <p>{{ teacher.registered_date }}</p>
+            </div>
+        </div>
+        <div id="teacher-course">Course List
+            {% for course in teacher.course_set.all %}
+                <div class="collection">
+                    <a class="collection-item" href="{% url 'course:detail' course.pk %}">{{ course.course_name }}</a>
+                </div>
+            {% endfor %}
+        </div> 
+    </div>
+</div>
+
+<script>
+    const element = document.getElementsByClassName('tabs')[0];
+    const instance = M.Tabs.init(element);
+</script>
+{% endblock %}

@@ -2,7 +2,7 @@
 {% block main %}
     {% if user.is_student %}
     <p>Hi student</p>
-    {% elif user.is_professor %}
+    {% elif user.is_teacher %}
     <p>Hi professor</p>
     {% elif user.is_admin %}
     <p>Hi admin</p>
