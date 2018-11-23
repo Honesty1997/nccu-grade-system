@@ -3,6 +3,7 @@
 {% block main %}
     <h3><a href="{% url 'course:detail' subject.course.pk %}">{{ subject.course.course_name }}</a></h3>
     <h5>{{ subject.title }}</h5>
+    <a href="{% url 'course:delete_subject' subject.pk %}" class="btn" style="margin-right:5px;">刪除項目</a>
     {% if subject.grade_set %}
         <table>
             <thead>
