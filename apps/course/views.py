@@ -62,6 +62,7 @@ class SubjectView(LoginRequiredMixin, View):
 
 class SubjectDelete(LoginRequiredMixin, DeleteView):
     model = ScoringSubject
+    template_name = 'modules/course/subject_delete.html'
     def get_success_url(self):
         return reverse('course:detail', kwargs={'pk' : self.object.course.pk})
     # success_url = '/course/{course_id}'

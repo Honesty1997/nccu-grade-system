@@ -6,13 +6,15 @@
                 {% if user.is_admin %}
                     <li><a href="{% url 'course:list' %}">課程列表</a></li>
                 {% endif %}
-                {% if user.is_professor or user.is_student %}
+                {% if user.is_teacher or user.is_student %}
                     <li><a href="#">我的課程</a></li>
                 {% endif %}
                 {% if user.is_admin %}
                     <li><a href="{% url 'student:list' %}">學生列表</a></li>
                 {% endif %}
+                {% if user.is_admin %}
                     <li><a href="{% url 'staff:list' %}">教職員</a></li>
+                {% endif %}    
                     <li><a href="{% url 'auth:logout' %}">登出</a></li>
             {% endif %}
         </ul>
