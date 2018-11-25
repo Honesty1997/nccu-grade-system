@@ -1,14 +1,16 @@
 {% extends 'base/layout.html' %}
-
+{% block button_header %}
+    <a href="{% url 'course:detail' subject.course.pk %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>回到課程</a>
+{% endblock %}
 {% block main %}
-    <h3><a href="{% url 'course:detail' subject.course.pk %}">{{ subject.course.course_name }}</a></h3>
     <h5>{{ subject.title }}</h5>
+    <a href="{% url 'course:delete_subject' subject.pk %}" class="btn" style="margin-right:5px;">刪除項目</a>
     {% if subject.grade_set %}
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Score</th>
+                    <th>名稱</th>
+                    <th>分數</th>
                     <th></th>
                 </tr>
             </thead>
@@ -27,7 +29,7 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td><strong>Average</strong></td>
+                    <td><strong>平均</strong></td>
                     <td><strong id="subject-average">{{ subject.average }}</strong></td>
                 </tr>
             </tbody>

@@ -1,21 +1,21 @@
 <nav class="light-blue darken-3">
     <div class="nav-wrapper">
-<!--  TODO(1): Change the route of the anchor tag to homepage by using django template url tag.
-    You can refer to the link https://docs.djangoproject.com/en/2.1/ref/templates/builtins/#url.-->
-        <a href="{% url 'homepage' %}" class="brand-logo right">Nccu Course</a>
-
+        <a href="{% url 'main:homepage' %}" class="brand-logo right">成績管理系統</a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <!-- TODO(2): Reference -->
             {% if user.is_authenticated %}
-                {% if user.is_professor or user.is_admin %}
-                    <li><a href="{% url 'course:list' %}">Courses</a></li>
+                {% if user.is_admin %}
+                    <li><a href="{% url 'course:list' %}">課程列表</a></li>
                 {% endif %}
-                {% if user.is_student or user.is_admin %}
-                    <li><a href="{% url 'student:list' %}">Students</a></li>
+                {% if user.is_teacher or user.is_student %}
+                    <li><a href="#">我的課程</a></li>
                 {% endif %}
-                    <li><a href="{% url 'auth:logout' %}">Log out</a></li>
-            {% else %}
-                <li><a href="{% url 'auth:login' %}">Log In</a></li>
+                {% if user.is_admin %}
+                    <li><a href="{% url 'student:list' %}">學生列表</a></li>
+                {% endif %}
+                {% if user.is_admin %}
+                    <li><a href="{% url 'staff:list' %}">教職員</a></li>
+                {% endif %}    
+                    <li><a href="{% url 'auth:logout' %}">登出</a></li>
             {% endif %}
         </ul>
     </div>

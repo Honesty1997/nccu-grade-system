@@ -1,6 +1,7 @@
 .PHONY: dev-up dev-build dev-down dev-restart shell
 CONTAINER_NAME = mysite-web
 DB_NAME = mysite-db
+
 dev-up:
 	docker-compose -f ./docker/docker-compose.yml up
 dev-build:

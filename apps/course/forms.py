@@ -5,4 +5,4 @@ from .models import ScoringSubject
 class ScoringSubjectForm(ModelForm):
     class Meta:
         model = ScoringSubject
-        fields = ['title']
+        fields = ['title', 'subject_type']

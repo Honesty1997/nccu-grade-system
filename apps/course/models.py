@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from mysite.models import BaseModel, Timestamp
 from apps.student.models import Student
+from apps.staff.models import Teacher
 from apps.auth.models import User
 from apps.staff.models import Teacher
 
@@ -13,9 +14,9 @@ class Course(BaseModel, Timestamp):
     numb = 0
     course_number = models.PositiveIntegerField(blank=True, null=True)
     course_name = models.CharField(max_length=50)
-    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
-    registered_students = models.ManyToManyField(Student)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    registered_students = models.ManyToManyField(Student, blank=True)
 
     def __str__(self):
         return self.course_name
@@ -85,9 +86,7 @@ class Course(BaseModel, Timestamp):
                 set_default_grade.save()
         return obj, created
 
-    # TODO(3): Please implement this function. The function should take the title of a ScoringSubject,
-    # and remove corresponding object in the database. Return the removed object as return value.
-    def remove_existing_subject(self, title: str):
+    def remove_existing_subject(self, title):
         """Remove a existing subject from a course.
 
             Args:
@@ -101,8 +100,13 @@ class Course(BaseModel, Timestamp):
         """
         if not isinstance(title, str):
             raise TypeError('Title should be string.')
-        obj, created = ScoringSubject.objects.delete()
-        return       
+        removed_subject = ScoringSubject.objects.filter(title=title)
+        if removed_subject:
+            removed_subject.delete()
+        else:
+            raise ValueError('Subject Does not Exist.')
+    
+        return removed_subject
 
     def get_absolute_url(self):
         from django.shortcuts import reverse
@@ -111,23 +115,24 @@ class Course(BaseModel, Timestamp):
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod
     def create_course_number():
-        index = Course.numb
-        n = "{0:0>3}".format(index)
-        Course.numb += 1
-        now = datetime.datetime.now()
-        year = str(now.year)
-        n = year + n
-        n = int(n)
-    
-        return n          
+        num_list = [i for i in range(1, 1000)]
+        for num in num_list:
+            if not Course.objects.filter(course_number=num):
+                return num
 
     def save(self):
-        self.course_number = Course.create_course_number()
+        if self.course_number is None:
+            self.course_number = Course.create_course_number()
         super().save()
 
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    SUBJECT_TYPE = (
+        ('Q', '小考'),
+        ('H', '作業'),
+    )
+    subject_type = models.CharField(max_length=2, null=True, choices=SUBJECT_TYPE)
 
     @property
     def average(self):

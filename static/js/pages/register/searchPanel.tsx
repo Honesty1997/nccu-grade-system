@@ -37,7 +37,7 @@ export default class SearchPanel extends Component {
                 }
             })
             .catch((err) => {
-                M.toast({ html: 'error', classes: 'red' });
+                M.toast({ html: '錯誤', classes: 'red' });
             });
     }
 
@@ -61,10 +61,10 @@ export default class SearchPanel extends Component {
                 <input id="student-number" 
                 type="text" 
                 value={this.state.studentId} 
-                placeholder="Enter student's sequence number" 
+                placeholder="輸入學生編號" 
                 onChange={this.onChange}
                 />
-                <button id="search" className="btn" onClick={this.onClick}>Search</button>
+                <button id="search" className="btn" onClick={this.onClick}>搜尋</button>
                 <SearchResults 
                     fetchedList={this.state.studentList}
                     studentList={this.props.studentList}

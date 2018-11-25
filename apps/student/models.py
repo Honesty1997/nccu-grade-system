@@ -45,7 +45,9 @@ class Student(Person, Timestamp):
         from django.shortcuts import reverse
         return reverse('student:detail', kwargs={'pk': self.pk})
 
-    
+    def save(self):
+        self.student_number = Student.create_student_number()
+        super().save(role='student')
 
     # TODO Please implement this function. Just make sure the number is unique and meaningful.
     @staticmethod

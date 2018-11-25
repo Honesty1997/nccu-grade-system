@@ -16,7 +16,7 @@ from .forms import ScoringSubjectForm
 
 class CourseList(LoginRequiredMixin, ListView):
     model = Course
-    template_name = 'modules/course/course.html'
+    template_name = 'modules/course/course_list.html'
     context_object_name = 'course_list'
     base_url = 'course:list'
     paginate_by = 25
@@ -29,7 +29,7 @@ class CourseDetail(LoginRequiredMixin, DetailView):
 class CourseCreate(LoginRequiredMixin, CreateView):
     model = Course
     template_name = 'modules/common/form.html'
-    fields = ['course_name', 'description']
+    fields = ['course_name', 'description', 'teacher']
     context_object_name = 'form'
 
 class CourseUpdate(LoginRequiredMixin, UpdateView):
@@ -59,6 +59,27 @@ class SubjectView(LoginRequiredMixin, View):
             subject, _ = course.add_new_subject(form.cleaned_data['title'])
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
+
+class SubjectDelete(LoginRequiredMixin, DeleteView):
+    model = ScoringSubject
+    template_name = 'modules/course/subject_delete.html'
+    def get_success_url(self):
+        return reverse('course:detail', kwargs={'pk' : self.object.course.pk})
+    # success_url = '/course/{course_id}'
+
+# class SubjectDView(LoginRequiredMixin, View):
+#     model = ScoringSubject
+    # def get(self, request, pk):
+    #         form = ScoringSubjectForm()
+    #         return render(request, 'modules/common/form.html', {'form': form})
+    
+    # def post(self, request, pk):
+    #     form = ScoringSubjectForm(request.POST)
+    #     if form.is_valid():
+    #         course = get_object_or_404(Course, pk=pk)
+    #         course.remove_existing_subject(form.cleaned_data['title'])
+    #         return redirect('course:detail', pk=pk)
+    #     return render(request, 'modules/common/form.html', {'form': form})
 
 class RegisterView(LoginRequiredMixin, View):
     def get(self, request, pk):

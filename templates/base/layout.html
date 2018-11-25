@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         {% block page_title %}
-            Nccu Grade System
+            成績管理系統
         {% endblock %}
     </title>
 
@@ -24,20 +24,15 @@
 <body>
     {% include 'components/navbar.html'%}
     <main>
-<a id="prev" class="btn-floating btn-large waves-effect waves-light light-blue lighten-1"><i class="material-icons">arrow_back</i></a>
-{% comment %} <a class="btn-floating btn-large waves-effect waves-light light-blue lighten-1"><i class="material-icons">arrow_forward</i></a> {% endcomment %}
-
+        <section style="display: flex; flex-direction: row-reverse; flex-wrap: wrap;">
+            {% block button_header %}
+            {% endblock %}
+        </section>
         {% block main %}
 
         {% endblock %}
     </main>
     {% block custom_script %}
     {% endblock %}
-<script>
-    const prevButton = document.querySelector('#prev');
-    prevButton.addEventListener('click', (e) => {
-        history.back();
-    });
-</script>
 </body>
 </html>
