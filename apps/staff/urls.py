@@ -3,7 +3,7 @@ from django.urls import path
 from .views import TeacherList, TeacherDetail, \
 TeacherCreate, TeacherUpdate
 
-app_name = 'staff'
+app_name = 'teacher'
 
 urlpatterns = [
     path('', TeacherList.as_view(), name='list'),
