@@ -9,8 +9,12 @@
     {% endif %}
 
     <h5>Your Course List:</h5>
+    <div class="divider"></div>
     {% for course in course_list %}
-        {{ course.course_name }}
+    <div class="section">
+        <h6><a href="{% url 'course:detail' course.id %}">{{ course.course_name }}</a></h6>
+    </div>
+    <div class="divider"></div>
     {% endfor %}
 
 {% endblock %}
