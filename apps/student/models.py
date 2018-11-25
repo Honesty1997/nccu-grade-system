@@ -44,7 +44,9 @@ class Student(Person, Timestamp):
 
     @staticmethod
     def create_student_number():
-        
+        last_student = Student.objects.all().reverse()[0]
+        stu_num = last_student.student_number + 1
+        return stu_num
 
     class Meta:
         ordering = ['id']

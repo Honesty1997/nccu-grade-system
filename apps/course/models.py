@@ -112,7 +112,7 @@ class ScoringSubject(BaseModel, Timestamp):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     SUBJECT_TYPE = (
         ('Q', '小考'),
-        ('H', '作業'),
+        ('H', '作業'), 
     )
     subject_type = models.CharField(max_length=2, null=True, choices=SUBJECT_TYPE)
 
