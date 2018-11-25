@@ -22,3 +22,17 @@ class TeacherDetail(DetailView):
     model = Teacher
     template_name = 'modules/teacher/teacher_detail.html'
     context_object_name = 'teacher'
+
+class TeacherCreate(CreateView):
+    model = Teacher
+    template_name = 'modules/common/form.html'
+    context_object_name = 'form'
+    fields = ['first_name', 'last_name', 'address',
+              'email', 'cellphone_number', 'phone_number']
+
+class TeacherUpdate(UpdateView):
+    model = Teacher
+    template_name = 'modules/common/form.html'
+    context_object_name = 'form'
+    fields = ['first_name', 'last_name', 'address',
+              'email', 'cellphone_number']

@@ -1,0 +1,51 @@
+{% extends 'base/layout.html' %}
+{% block main %}
+<div class="card">
+    <div class="card-content">
+    {% if user.is_admin %}
+            <section style="display: flex; justify-content: end;">
+                <a href="{% url 'teacher:update' teacher.pk %}" class="btn" style="margin-right:5px;">編輯</a>
+                <a href="{% url 'auth:change-password' teacher.user.pk %}" class="btn" style="margin-right:5px;">更改密碼</a>
+            </section>
+            <h4>{{ teacher.name }}</h4>
+        {% endif %}
+    </div>
+    <div class="card-tabs">
+        <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a href="#teacher-info">詳細</a></li>
+            <li class="tab"><a href="#teacher-course">參與課程</a></li>
+        </ul>
+    </div>
+    <div class="card-content grey lighten-4">
+        <div id="teacher-info">
+            <div class="divider"></div>
+            <div class="section">
+                <h5>地址</h5>
+                <p>{{ teacher.address }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>Email</h5>
+                <p>{{ teacher.email }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>電話號碼</h5>
+                <p>{{ teacher.phone_number }}</p>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+                <h5>手機號碼</h5>
+                <p>{{ teacher.cellphone_number }}</p>
+            </div>
+            <div class="divider"></div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    const element = document.getElementsByClassName('tabs')[0];
+    const instance = M.Tabs.init(element);
+</script>
+{% endblock %}
