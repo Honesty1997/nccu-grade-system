@@ -17,6 +17,7 @@ class UserManager(BaseUserManager):
         )
 
         user.set_password(password)
+        user.is_superuser = False
         user.save()
         return user
 
@@ -31,19 +32,22 @@ class UserManager(BaseUserManager):
         )
 
         user.role_field = 4
-        user.is_admin = True
+        user.is_superuser = True
+        user.is_active = True
+        user.is_staff = True
+
         user.save()
         return user
 
 class User(AbstractBaseUser, Person, Timestamp):
     STUDENT = 1
     PROFESSOR = 2
-    STAFF = 3
+    EXECUTIVE = 3
     ADMIN = 4
     ROLE_CHOICES = (
         (STUDENT, 'Student'),
         (PROFESSOR, 'Professor'),
-        (STAFF, 'Staff'),
+        (EXECUTIVE, 'Executive'),
         (ADMIN, 'Admin')
     )
 
@@ -51,12 +55,9 @@ class User(AbstractBaseUser, Person, Timestamp):
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
-    is_active = models.BooleanField(default=True)
-
-    @property
-    def role(self):
-        role_table = dict(self.ROLE_CHOICES)
-        return role_table[self.role_field]
+    is_active = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
@@ -69,10 +70,6 @@ class User(AbstractBaseUser, Person, Timestamp):
         return True
 
     @property
-    def is_staff(self):
-        return self.role_field == 4
-
-    @property
     def is_student(self):
         return self.role_field == 1
 
@@ -81,8 +78,12 @@ class User(AbstractBaseUser, Person, Timestamp):
         return self.role_field == 2
 
     @property
-    def is_admin(self):
+    def is_executive(self):
         return self.role_field == 3
+
+    @property
+    def is_admin(self):
+        return self.role_field == 4
 
     def __str__(self):
         return '[{}] {}'.format(self.role, self.name)

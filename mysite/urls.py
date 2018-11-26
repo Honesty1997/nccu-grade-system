@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 
 import apps.course.urls as course_routes
 import apps.student.urls as student_routes
@@ -28,5 +29,5 @@ urlpatterns = [
     path('course/', include(course_routes)),
     path('student/', include(student_routes)),
     path('grade/', include(grade_routes)),
-    path('', TemplateView.as_view(template_name='modules/index/index.html'), name='index'),
+    path('', login_required(TemplateView.as_view(template_name='modules/index/index.html')), name='index'),
 ]

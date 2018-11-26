@@ -6,8 +6,8 @@ import $ from 'jquery';
 
 import getCSRFToken from '../../utils/getCSRFToken';
 
-import SearchPanel from './searchPanel';
-import ManagePanel from './managePanel';
+import SearchPanel from './SearchPanel';
+import ManagePanel from './ManagePanel';
 
 const courseId = $("#course-pk").data('id');
 

@@ -12,4 +12,4 @@ dev-restart:
 shell:
 	docker exec -it ${CONTAINER_NAME} bash
 clean:
-	rm .docker-assets/db/data/*
+	rm -rf .docker-assets/db/data/*
