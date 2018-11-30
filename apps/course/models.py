@@ -1,13 +1,13 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-
+from uuid import uuid4
 from mysite.models import BaseModel, Timestamp
 from apps.student.models import Student
 from apps.staff.models import Teacher
 from apps.auth.models import User
 # Create your models here.
 class Course(BaseModel, Timestamp):
-    course_number = models.PositiveIntegerField(blank=True, null=True)
+    course_number = models.CharField(unique=True, blank=True, null=True, max_length=32)
     course_name = models.CharField(max_length=50)
     description = models.TextField()
     teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
@@ -15,9 +15,6 @@ class Course(BaseModel, Timestamp):
 
     def __str__(self):
         return self.course_name
-
-    def course_average(self):
-        pass
 
     def register(self, students):
         """
@@ -95,12 +92,8 @@ class Course(BaseModel, Timestamp):
         """
         if not isinstance(title, str):
             raise TypeError('Title should be string.')
-        removed_subject = ScoringSubject.objects.filter(title=title)
-        if removed_subject:
-            removed_subject.delete()
-        else:
-            raise ValueError('Subject Does not Exist.')
-    
+        removed_subject = self.scoringsubject_set.get(title=title)
+        removed_subject.delete()
         return removed_subject
 
     def get_absolute_url(self):
@@ -109,10 +102,9 @@ class Course(BaseModel, Timestamp):
 
     @staticmethod
     def create_course_number():
-        num_list = [i for i in range(1, 1000)]
-        for num in num_list:
-            if not Course.objects.filter(course_number=num):
-                return num
+        # TODO: Currently use uuid for convenience. Should use more proper way to 
+        # represent course number.
+        return uuid4()
 
     def save(self):
         if self.course_number is None:

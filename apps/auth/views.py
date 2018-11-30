@@ -35,8 +35,9 @@ class ChangePassword(View):
         if form.is_valid():
             new_password = form.cleaned_data['password']
             user.set_password(new_password)
+            user.save()
             if not request.user.is_admin:
                 logout(request)
-            return HttpResponseRedirect(reverse('homepage'))
+            return HttpResponseRedirect(reverse('main:homepage'))
         else:
             return render(request, 'modules/auth/change_password.html', { 'form': form })

@@ -4,14 +4,19 @@ import M from 'materialize-css';
 
 import SearchResults from './SearchResults';
 
+interface SearchPanelState {
+    studentList: Array<Object>;
+    studentId: string;
+}
+
 export default class SearchPanel extends Component {
-    public state;
-    constructor(props) {
+    public state: SearchPanelState;
+    constructor(props: any) {
         super(props);
         this.state = {
             studentList: [],
             studentId: '',
-        }
+        };
         this.onChange = this.onChange.bind(this);
         this.onClick = this.onClick.bind(this);
     }

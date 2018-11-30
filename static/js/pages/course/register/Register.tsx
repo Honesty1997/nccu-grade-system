@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { Component } from 'react';
 import ReactDOM from 'react-dom';
-import M from 'materialize-css';
 import $ from 'jquery';
 
-import getCSRFToken from '../../utils/getCSRFToken';
+import getCSRFToken from '../../../utils/getCSRFToken';
 
 import SearchPanel from './SearchPanel';
 import ManagePanel from './ManagePanel';
 
 const courseId = $("#course-pk").data('id');
 
-class Register extends Component {
+export default class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -123,4 +122,3 @@ class Register extends Component {
     }
 }
 
-ReactDOM.render(<Register />, document.getElementById('test'));

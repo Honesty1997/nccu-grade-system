@@ -1,16 +1,10 @@
 {% extends 'base/layout.html' %}
-{% block main %}
-<section style="display: flex; justify-content: end;">
-    <!-- 
-        TODO(2): Only the admin can see the add button. You can refer to what I do in another 
-        template like templates/components/navbar.html.
-        As a plus, you can also modify the view function to only allow admin to access 
-        the webpage.
-     -->
-     {% if user.is_admin or user.is_execitive %}
-    <a  href="{% url 'course:create' %}" class="btn">新增課程</a>
+{% block button_header %}
+    {% if user.is_admin or user.is_execitive %}
+        <a  href="{% url 'course:create' %}" class="btn">新增課程</a>
     {% endif %}
-</section>
+{% endblock %}
+{% block main %}
 <section>
     <ul class="collection">
         {% for course in course_list %}

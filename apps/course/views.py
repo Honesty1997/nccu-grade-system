@@ -1,6 +1,6 @@
 from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, UpdateView
 from django.views import View
 from django.http import JsonResponse
 import json
@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-from mysite.views import ListView
+from mysite.views import ListView, DeleteView
 from .models import Course, ScoringSubject
 from apps.student.models import Student
 from .forms import ScoringSubjectForm
@@ -16,7 +16,7 @@ from .forms import ScoringSubjectForm
 
 class CourseList(LoginRequiredMixin, ListView):
     model = Course
-    template_name = 'modules/course/course.html'
+    template_name = 'modules/course/course_list.html'
     context_object_name = 'course_list'
     base_url = 'course:list'
     paginate_by = 25
@@ -41,6 +41,7 @@ class CourseUpdate(LoginRequiredMixin, UpdateView):
 class CourseDelete(LoginRequiredMixin, DeleteView):
     model = Course
     success_url = reverse_lazy('course:list')
+    authorized_groups = ['teacher', 'admin']
 
 class SubjectDetail(LoginRequiredMixin, DetailView):
     model = ScoringSubject
@@ -62,24 +63,14 @@ class SubjectView(LoginRequiredMixin, View):
 
 class SubjectDelete(LoginRequiredMixin, DeleteView):
     model = ScoringSubject
-    template_name = 'modules/course/subject_delete.html'
-    def get_success_url(self):
-        return reverse('course:detail', kwargs={'pk' : self.object.course.pk})
-    # success_url = '/course/{course_id}'
+    authorized_groups = ['teacher', 'admin']
+    course_pk = None
+    def delete(self, request, pk, subject_pk):
+        self.course_pk = pk
+        return super().delete(request, subject_pk)
 
-# class SubjectDView(LoginRequiredMixin, View):
-#     model = ScoringSubject
-    # def get(self, request, pk):
-    #         form = ScoringSubjectForm()
-    #         return render(request, 'modules/common/form.html', {'form': form})
-    
-    # def post(self, request, pk):
-    #     form = ScoringSubjectForm(request.POST)
-    #     if form.is_valid():
-    #         course = get_object_or_404(Course, pk=pk)
-    #         course.remove_existing_subject(form.cleaned_data['title'])
-    #         return redirect('course:detail', pk=pk)
-    #     return render(request, 'modules/common/form.html', {'form': form})
+    def get_success_url(self):
+        return reverse('course:detail', kwargs={'pk' : self.course_pk})
 
 class RegisterView(LoginRequiredMixin, View):
     def get(self, request, pk):
@@ -127,6 +118,7 @@ def student_search(request, pk):
         return JsonResponse(response)
     try:
         student = Student.objects.get(pk=student_pk)
+        print('here')
     except Student.DoesNotExist:
         response = {
             'status': 'failed',

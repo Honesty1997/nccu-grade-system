@@ -1,12 +1,15 @@
 {% extends 'base/layout.html' %}
-
+{% block button_header %}
+        <a class='dropdown-trigger btn' href='#' data-target='course-options'>選項</a>
+        <ul id="course-options" class="dropdown-content">
+            <li><a href="{% url 'course:register' course.id %}">學生管理</a></li>
+            <li><a href="{% url 'course:create_subject' course.id %}">新增項目</a></li>
+            <li><a href="{% url 'course:update' course.id %}">編輯課程</a></li>
+            <li><a href="#modal1" class="modal-trigger">刪除課程</a></li>
+        </ul>
+        <a href="{% url 'course:list' %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>課程列表</a>
+{% endblock %}
 {% block main %}
-<section style="display: flex; justify-content: end;">
-    <a href="{% url 'course:register' course.id %}" class="btn" style="margin-right:5px;">學生管理</a>
-    <a href="{% url 'course:create_subject' course.id %}" class="btn" style="margin-right:5px;">新增項目</a>
-    <a href="{% url 'course:update' course.id %}" class="btn" style="margin-right:5px;">編輯課程</a>
-    <a href="{% url 'course:delete' course.id %}" class="btn">刪除課程</a>
-</section>
     <h2>{{ course.course_name }}({{ course.course_number}})</h2>
     <p>{{ course.description }}</p>
     <div class="row">
@@ -34,7 +37,7 @@
                     </li>
                     {% if course.registered_students.all%}
                         {% for student in course.registered_students.all %}
-                            <a class="collection-item" href="{% url 'student:detail' student.pk %}"> {{ student.name }} </a>
+                            <a class="collection-item" href="#"> {{ student.name }} </a>
                         {% endfor %}
                     {% else %}
                         <p class='no-item'>還沒有學生。</p>
@@ -43,4 +46,14 @@
             {% endif %}
         </div>
     </div>
+    
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>你確定要刪除這項課程？</h4>
+    </div>
+    <div class="modal-footer">
+      <a id="course-delete" data-url="{% url 'course:delete' course.id %}" href="#!" class="waves-effect waves-green btn-flat">確定</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">取消</a>
+    </div>
+</div>
 {% endblock %}

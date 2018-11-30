@@ -11,15 +11,4 @@
         {% endfor %}
     <input class="btn" type="submit" value="Submit">
 </form>
-<script>
-$(document).ready(function(){
-    $('select').formSelect();
-});
-
-const textareas = document.querySelectorAll('textarea');
-for(let textarea of textareas) {
-    textarea.classList.add('materialize-textarea');
-}
-
-</script>
 {% endblock %}

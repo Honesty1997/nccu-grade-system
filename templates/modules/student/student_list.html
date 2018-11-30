@@ -1,11 +1,10 @@
 {% extends 'base/layout.html' %}
-
+{% block button_header %}
+    {% if user.is_admin %}
+        <a href="{% url 'student:create' %}" class="btn" style="margin-right:5px;">新增學生</a>
+    {% endif %}
+{% endblock %}
 {% block main %}
-<section style="display: flex; justify-content: end;">
-{% if user.is_admin %}
-    <a href="{% url 'student:create' %}" class="btn" style="margin-right:5px;">新增學生</a>
-{% endif %}
-</section>
 <ul class="collection">
     {% for student in student_list %}
     <li class="collection-item">

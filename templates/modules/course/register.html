@@ -1,11 +1,10 @@
 {% extends "base/layout.html" %}
 {% load static %}
+{% block button_header %}
+    <a href="{% url 'course:detail' pk %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>完成編輯</a>
+{% endblock %}
 {% block main %}
 <input id="course-pk" type="number" data-id="{{ pk }}" hidden>
 <div id="test"></div>
 
-{% endblock %}
-
-{% block custom_script %}
-<script src="{% static 'build/js/register.js' %}"></script>
 {% endblock %}

@@ -1,14 +1,15 @@
 {% extends 'base/layout.html' %}
+{% block button_header %}
+{% if user.is_admin %}
+    <a href="{% url 'student:update' student.pk %}" class="btn" style="margin-right:5px;">編輯</a>
+    <a href="{% url 'auth:change-password' student.user.pk %}" class="btn" style="margin-right:5px;">更改密碼</a>
+{% endif %}
+    <a href="{% url 'student:list' %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>學生列表</a>
+{% endblock %}
 {% block main %}
 <div class="card">
     <div class="card-content">
-    {% if user.is_admin %}
-            <section style="display: flex; justify-content: end;">
-                <a href="{% url 'student:update' student.pk %}" class="btn" style="margin-right:5px;">編輯</a>
-                <a href="{% url 'auth:change-password' student.user.pk %}" class="btn" style="margin-right:5px;">更改密碼</a>
-            </section>
-            <h4>{{ student.name }}</h4>
-        {% endif %}
+        <h4>{{ student.name }}</h4>
     </div>
     <div class="card-tabs">
         <ul class="tabs tabs-fixed-width">
@@ -53,9 +54,4 @@
         </div> 
     </div>
 </div>
-
-<script>
-    const element = document.getElementsByClassName('tabs')[0];
-    const instance = M.Tabs.init(element);
-</script>
 {% endblock %}

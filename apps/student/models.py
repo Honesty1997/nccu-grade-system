@@ -1,26 +1,11 @@
 from django.db import models
-
+from uuid import uuid4
 from apps.auth.models import User
 from mysite.models import Person, Timestamp
 
 # Create your models here.
 class Student(Person, Timestamp):
-    student_number = models.PositiveIntegerField(blank=True, null=True)
-    FRESHMAN = 'FR'
-    SOPHOMORE = 'SO'
-    JUNIOR = 'JR'
-    SENIOR = 'SR'
-    YEAR_IN_SCHOOL_CHOICES = (
-        (FRESHMAN, 'Freshman'),
-        (SOPHOMORE, 'Sophomore'),
-        (JUNIOR, 'Junior'),
-        (SENIOR, 'Senior'),
-    )
-    year_in_school = models.CharField(
-        max_length=2,
-        choices=YEAR_IN_SCHOOL_CHOICES,
-        default=FRESHMAN,
-    )
+    student_number = models.CharField(unique=True, blank=True, null=True, max_length=32)
 
     def info(self, **kwargs):
         info = super().info(**kwargs)
@@ -30,7 +15,6 @@ class Student(Person, Timestamp):
         info['address'] = self.address
         info['cellphone_number'] = self.cellphone_number
         info['email'] = self.email
-        info['year_in_school'] = self.year_in_school
         info['name'] = self.name
         return info
 
@@ -44,7 +28,7 @@ class Student(Person, Timestamp):
 
     @staticmethod
     def create_student_number():
-        return 1
+        return uuid4().hex
 
     class Meta:
         ordering = ['id']
