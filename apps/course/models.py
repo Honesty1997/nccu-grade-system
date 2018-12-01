@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from uuid import uuid4
-from mysite.models import BaseModel, Timestamp
+from core.models import BaseModel, Timestamp
 from apps.student.models import Student
 from apps.staff.models import Teacher
 from apps.auth.models import User

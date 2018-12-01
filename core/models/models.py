@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 class BaseModel(models.Model):
     @classmethod
     def create(cls, **kwargs):

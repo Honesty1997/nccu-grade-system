@@ -1,5 +1,5 @@
 from django.db import models
-from mysite.models import Person
+from core.models import Person
 
 
 class Teacher(Person):

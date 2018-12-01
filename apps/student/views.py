@@ -3,7 +3,7 @@ from django.views.generic import DetailView, CreateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.auth.models import User 
-from mysite.views import ListView
+from core.views import ListView
 from .models import Student
 # Create your views here.
 class StudentList(LoginRequiredMixin, ListView):

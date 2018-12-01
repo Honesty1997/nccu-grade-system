@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
-from mysite.models import Person, Timestamp
+from core.models import Person, Timestamp
 # Create your models here.
 
 class UserManager(BaseUserManager):

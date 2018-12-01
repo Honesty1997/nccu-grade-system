@@ -1,7 +1,7 @@
 from django.db import models
 from uuid import uuid4
 from apps.auth.models import User
-from mysite.models import Person, Timestamp
+from core.models import Person, Timestamp
 
 # Create your models here.
 class Student(Person, Timestamp):

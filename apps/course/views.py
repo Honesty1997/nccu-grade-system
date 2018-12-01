@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-from mysite.views import ListView, DeleteView
+from core.views import ListView, DeleteView
 from .models import Course, ScoringSubject
 from apps.student.models import Student
 from .forms import ScoringSubjectForm
