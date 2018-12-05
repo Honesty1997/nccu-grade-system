@@ -1,8 +1,7 @@
 from django.shortcuts import render, reverse
-from django.views.generic import DetailView, CreateView, UpdateView
 
 from apps.auth.models import User 
-from core.views import ListView
+from core.views import ListView, DetailView, CreateView, UpdateView
 from .models import Teacher
 from django.contrib.auth.mixins import LoginRequiredMixin
 
