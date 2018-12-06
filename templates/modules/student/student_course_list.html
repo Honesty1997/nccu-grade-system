@@ -3,7 +3,7 @@
     <div class="collection">
         <div href="#!" class="collection-item active">我的課程列表</div>
         {% for course in course_list %}
-            <a href="#!" class="collection-item">{{ course.course_name }}({{ course.course_number }})</a>
+            <a href="{% url 'student:subject_list' course.pk %}" class="collection-item">{{ course.course_name }}({{ course.course_number }})</a>
         {% endfor %}
     </div>
     {% include 'components/paginator.html' %}
