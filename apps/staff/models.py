@@ -3,5 +3,5 @@ from core.models import Person
 
 
 class Teacher(Person):
-    def save(self):
-        super().save(role='teacher')
+    def save(self, **kwargs):
+        super().save(role='teacher', **kwargs)
