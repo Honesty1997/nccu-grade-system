@@ -119,10 +119,10 @@ class Course(BaseModel, Timestamp):
             scoringsubject_list.append(subject_info)
         return scoringsubject_list
 
-    def save(self):
+    def save(self, **kwargs):
         if self.course_number is None:
             self.course_number = Course.create_course_number()
-        super().save()
+        super().save(**kwargs)
 
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)

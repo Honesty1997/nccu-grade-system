@@ -5,8 +5,7 @@ class BaseModel(models.Model):
         """
             A quick way to use get_or_create on Class level.
         """
-        obj, created = cls.objects.get_or_create(**kwargs)
-        return obj, created
+        return cls.objects.get_or_create(**kwargs)
 
     def info(self, **kwargs):
         info = {}
@@ -60,7 +59,7 @@ class Person(BaseModel):
                 user = User.objects.create_superuser(
                     self.email, self.phone_number)
                 self.user = user
-        super().save()
+        super().save(**kwargs)
 
     class Meta:
         abstract = True
