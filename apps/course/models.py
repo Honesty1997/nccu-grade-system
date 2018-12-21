@@ -1,25 +1,20 @@
 from django.db import models
-
-from mysite.models import BaseModel, Timestamp
+from django.core.exceptions import ObjectDoesNotExist
+from uuid import uuid4
+from core.models import BaseModel, Timestamp
 from apps.student.models import Student
-
+from apps.staff.models import Teacher
+from apps.auth.models import User
 # Create your models here.
 class Course(BaseModel, Timestamp):
-    course_number = models.CharField(
-        max_length=40,
-        db_index=True, 
-        unique=True
-    )
+    course_number = models.CharField(unique=True, blank=True, null=True, max_length=32)
     course_name = models.CharField(max_length=50)
-    # teacher = models.ForeignKey()
     description = models.TextField()
-    registered_students = models.ManyToManyField(Student)
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True)
+    registered_students = models.ManyToManyField(Student, blank=True)
 
     def __str__(self):
         return self.course_name
-
-    def course_average(self):
-        pass
 
     def register(self, students):
         """
@@ -61,13 +56,19 @@ class Course(BaseModel, Timestamp):
         self.save()
         return self, count
 
-    def add_new_subject(self, title):
-        """
+    def add_new_subject(self, title: str):
+        """Add new subject to a Course.
+
             Args:
-                title String: The title of the new subject.
+                title str: The title of the new subject.
             Returns:
-                The ScoringSubject created.
+                ScoringSubject: The subject which is created.
+                created: Whether the subject is newly created.
+            Raises:
+                TypeError: When the argument is not string.
         """
+        if not isinstance(title, str):
+            raise TypeError('Title should be string.')
         obj, created = ScoringSubject.objects.get_or_create(title=title, course=self)
         if created:
             from apps.grade.models import Grade
@@ -75,15 +76,49 @@ class Course(BaseModel, Timestamp):
                 set_default_grade = Grade(
                     student=student, subject=obj, score=0)
                 set_default_grade.save()
-        return obj
+        return obj, created
+
+    def remove_existing_subject(self, title):
+        """Remove a existing subject from a course.
+
+            Args:
+                title str: The title of the removed subject.
+            Returns:
+                The removed subject.
+            Raise:
+                TypeError: The argument is not str.
+                ObjectDoesNotExist: When the title object is not found.
+
+        """
+        if not isinstance(title, str):
+            raise TypeError('Title should be string.')
+        removed_subject = self.scoringsubject_set.get(title=title)
+        removed_subject.delete()
+        return removed_subject
 
     def get_absolute_url(self):
         from django.shortcuts import reverse
         return reverse('course:detail', kwargs={'pk': self.pk})
 
+    @staticmethod
+    def create_course_number():
+        # TODO: Currently use uuid for convenience. Should use more proper way to 
+        # represent course number.
+        return uuid4()
+
+    def save(self):
+        if self.course_number is None:
+            self.course_number = Course.create_course_number()
+        super().save()
+
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    SUBJECT_TYPE = (
+        ('Q', '小考'),
+        ('H', '作業'),
+    )
+    subject_type = models.CharField(max_length=2, null=True, choices=SUBJECT_TYPE)
 
     @property
     def average(self):
@@ -92,7 +127,7 @@ class ScoringSubject(BaseModel, Timestamp):
         for subject in self.grade_set.all():
             total += subject.score
             count += 1
-        
+
         try:
             average = total / count
         except ZeroDivisionError:
@@ -101,9 +136,7 @@ class ScoringSubject(BaseModel, Timestamp):
 
     def __str__(self):
         return '[{}]{}'.format(self.course, self.title)
-    
+
     def get_absolute_url(self):
         from django.shortcuts import reverse
         return reverse('course:subject', kwargs={'pk': self.pk })
-
-

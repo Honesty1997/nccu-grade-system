@@ -5,13 +5,13 @@
     }
 </style>
 <section class="pagination-wrapper">
-    <ul class="pagination">
+    <ul class="pagination light-blue lighten-1">
         {% for page in paginator.page_range %}
-        {% if page == page_obj.number %}
-        <li class="active"><a href="{% url base_url %}?page={{ page }}">{{ page }}</a></li>
-        {% else %}
-        <li class="waves-effect"><a href="{% url base_url %}?page={{ page }}">{{ page }}</a></li>
-        {% endif %}
+            {% if page == page_obj.number %}
+    <li class="active light-blue lighten-1"><a href="{% url base_url %}?page={{ page }}">{{ page }}</a></li>
+            {% else %}
+    <li class="waves-effect light-blue lighten-3"><a href="{% url base_url %}?page={{ page }}">{{ page }}</a></li>
+            {% endif %}
         {% endfor %}
     </ul>
 </section>

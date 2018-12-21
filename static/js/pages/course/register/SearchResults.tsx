@@ -20,7 +20,7 @@ export default class SearchResults extends Component {
                 }
             })
             .catch((err) => {
-                M.toast({ html: 'error', classes: 'red' });
+                M.toast({ html: '錯誤', classes: 'red' });
             });
     }
 
@@ -29,7 +29,7 @@ export default class SearchResults extends Component {
             let button;
             if (this.props.studentList.some((stu) => (stu.pk == student.pk))) {
                 button = (<button className="secondary-content btn-small student-add-button" disabled>
-                    Add
+                    新增
                 </button>
                 );
             } else {
@@ -37,7 +37,7 @@ export default class SearchResults extends Component {
                 <button className="secondary-content btn-small student-add-button"
                     onClick={() => {this.onClick(student)}}
                 >
-                    Add
+                    新增
                 </button>
                 );
             }
@@ -50,9 +50,9 @@ export default class SearchResults extends Component {
         });
         return (
             <div className="collection with-header" style={{ marginTop: '25px' }}>
-                <h4 className="collection-header">Results</h4>
+                <h4 className="collection-header">搜尋結果</h4>
                 <div id="results-container" style={{ padding: '5px' }}>
-                    { studentList }
+                    {studentList.length == 0 ? '沒有結果' : studentList }
                 </div>
             </div>
         );

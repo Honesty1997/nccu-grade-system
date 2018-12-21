@@ -1,14 +1,15 @@
 {% extends 'base/layout.html' %}
-
+{% block button_header %}
+    <a href="#modal1" class="btn modal-trigger">刪除項目</a>
+    <a href="{% url 'course:detail' subject.course.pk %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>回到課程</a>
+{% endblock %}
 {% block main %}
-    <h3><a href="{% url 'course:detail' subject.course.pk %}">{{ subject.course.course_name }}</a></h3>
     <h5>{{ subject.title }}</h5>
-    {% if subject.grade_set %}
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Score</th>
+                    <th>名稱</th>
+                    <th>分數</th>
                     <th></th>
                 </tr>
             </thead>
@@ -27,68 +28,19 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td><strong>Average</strong></td>
+                    <td><strong>平均</strong></td>
                     <td><strong id="subject-average">{{ subject.average }}</strong></td>
                 </tr>
             </tbody>
         </table>
-    {% else %}
-        No results
-    {% endif %}
-<script>
 
-    $('td').on('click', '.edit-score', function(event){
-        event.preventDefault();
-        const editId = $(event.target).data('id');
-        const score = parseFloat($(`.score[data-id="${editId}"]`).html());
-        $(event.target).toggleClass('submit-score edit-score').html('submit');
-        $(`.score[data-id="${editId}"]`).html(`<input data-id="${editId}" type="number" value=${score} max="100" min="0" step="0.01">`);
-    });
-
-    $('td').on('click', '.submit-score', function(event){
-        event.preventDefault();
-        const editId = $(event.target).data('id');
-        const newScore = $(`input[data-id="${editId}"]`).val();
-        
-        if(!newScore) {
-            M.toast({ html: 'input is not a number.', classes: 'red'});
-            return false;
-        }
-        if(newScore > 100 || newScore < 0) {
-            M.toast({ html: 'input out of range.', classes: 'red'});
-            return false;
-        }
-        
-        const csrfToken = getCSRFToken();
-        
-        const body = JSON.stringify({
-            score: newScore,
-            pk: editId,
-        });
-        
-        const headers = new Headers();
-        headers.set('Content-Type', 'application/x-www-form-urlencoded');
-        headers.set('X-CSRFToken', csrfToken);
-
-        const postNewGrade = fetch('{% url "grade:edit"%}', {
-            headers,
-            method: 'POST',
-            body,
-        });
-
-        postNewGrade
-            .then((response)=>{
-                return response.json();
-            })
-            .then((data) => {
-                M.toast({html: data.status , classes: 'card-panel teal lighten-2'});
-                $(`.score[data-id="${editId}"]`).html(data.score);
-                $(event.target).toggleClass('submit-score edit-score').html('edit');
-                $('#subject-average').html(data.new_average);
-            })
-            .catch((error) => {
-                M.toast({ html: error, classes: 'red'});
-            });
-    });
-</script>
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+              <h4>你確定要刪除這個評分項目？</h4>
+            </div>
+            <div class="modal-footer">
+              <a id="subject-delete" data-url="{% url 'course:delete_subject' subject.course.id subject.id %}" href="#" class="waves-effect waves-green btn-flat">確定</a>
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat">取消</a>
+            </div>
+        </div>
 {% endblock %}

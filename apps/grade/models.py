@@ -1,6 +1,6 @@
 from django.db import models
 
-from mysite.models import BaseModel, Timestamp
+from core.models import BaseModel, Timestamp
 from apps.student.models import Student
 from apps.course.models import Course, ScoringSubject
 from .errors import ScoreOutOfRangeError

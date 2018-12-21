@@ -1,0 +1,20 @@
+{% extends 'base/layout.html' %}
+{% block main %}
+    {% if user.is_student %}
+    <p>Hi student</p>
+    {% elif user.is_teacher %}
+    <p>Hi professor</p>
+    {% elif user.is_admin %}
+    <p>Hi admin</p>
+    {% endif %}
+
+    <h4>Your Course List:</h4>
+    {% for course in course_list %}
+    <div class="section">
+        <h5><a href="{% url 'course:detail' course.id %}">{{ course.course_name }}({{ course.course_number }})</a></h5>
+        <p>Proffessor: {{ course.teacher.name }}</p>
+    </div>
+    <div class="divider"></div>
+    {% endfor %}
+
+{% endblock %}

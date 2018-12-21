@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function wait_for_postgre {
-    wait-for-it.sh db:5432
+    wait-for-it.sh -t 0 db:5432
 }
 
 if [ "$1" = 'dev-webserver' ]; then

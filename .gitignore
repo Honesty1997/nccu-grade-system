@@ -19,3 +19,6 @@ static/build
 
 # parcel cache
 .cache
+
+# virtualenv
+.env
