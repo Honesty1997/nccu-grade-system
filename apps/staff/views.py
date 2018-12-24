@@ -1,8 +1,7 @@
 from django.shortcuts import render, reverse
-from django.views.generic import DetailView, CreateView, UpdateView
 
 from apps.auth.models import User 
-from core.views import ListView
+from core.views import ListView, DetailView, CreateView, UpdateView
 from .models import Teacher
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -13,6 +12,7 @@ class TeacherList(LoginRequiredMixin, ListView):
     template_name = 'modules/staff/teacher_list.html'
     context_object_name = 'teacher_list'
     paginate_by = 25
+    authorized_groups = ['admin']
     base_url = 'staff:list'
 
 
@@ -20,4 +20,5 @@ class TeacherList(LoginRequiredMixin, ListView):
 class TeacherDetail(LoginRequiredMixin, DetailView):
     model = Teacher
     template_name = 'modules/staff/teacher_detail.html'
+    authorized_groups = ['admin', 'teacher']
     context_object_name = 'teacher'

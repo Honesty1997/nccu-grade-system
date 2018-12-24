@@ -106,10 +106,23 @@ class Course(BaseModel, Timestamp):
         # represent course number.
         return uuid4()
 
-    def save(self):
+    def get_total_score(self, student=None):
+        scoringsubject_list = []
+        for subject in self.scoringsubject_set.all():
+            subject_info = {
+                'title': subject.title,
+                'subject_type': subject.subject_type,
+                'score_list': subject.get_score_list()
+            }
+            if student:
+                subject_info['current_score'] = subject.get_student_score(student)
+            scoringsubject_list.append(subject_info)
+        return scoringsubject_list
+
+    def save(self, **kwargs):
         if self.course_number is None:
             self.course_number = Course.create_course_number()
-        super().save()
+        super().save(**kwargs)
 
 class ScoringSubject(BaseModel, Timestamp):
     title = models.CharField(max_length=50)
@@ -140,3 +153,12 @@ class ScoringSubject(BaseModel, Timestamp):
     def get_absolute_url(self):
         from django.shortcuts import reverse
         return reverse('course:subject', kwargs={'pk': self.pk })
+
+    def get_score_list(self):
+        grades = self.grade_set.all()
+        scores_list = [grade.score for grade in grades]
+        return scores_list
+    
+    def get_student_score(self, student):
+        grade = self.grade_set.get(student=student)
+        return grade.score

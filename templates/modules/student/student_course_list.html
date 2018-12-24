@@ -1,0 +1,10 @@
+{% extends 'base/layout.html' %}
+{% block main %}
+    <div class="collection">
+        <div href="#!" class="collection-item active">我的課程列表</div>
+        {% for course in course_list %}
+            <a href="{% url 'student:subject_list' course.pk %}" class="collection-item">{{ course.course_name }}({{ course.course_number }})</a>
+        {% endfor %}
+    </div>
+    {% include 'components/paginator.html' %}
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from apps.course.models import Course, ScoringSubject
+from apps.staff.models import  Teacher
 # Create your tests here.
 
 class CourseTestCase(TestCase):
