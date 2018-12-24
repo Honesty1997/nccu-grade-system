@@ -8,13 +8,25 @@
     <p>Hi admin</p>
     {% endif %}
 
-    <h4>Your Course List:</h4>
+    {% if user.is_student %}
+<div class="collection">
+    <div href="#!" class="collection-item active">我的課程列表</div>
     {% for course in course_list %}
-    <div class="section">
-        <h5><a href="{% url 'course:detail' course.id %}">{{ course.course_name }}({{ course.course_number }})</a></h5>
-        <p>Proffessor: {{ course.teacher.name }}</p>
-    </div>
-    <div class="divider"></div>
+    <a href="{% url 'student:subject_list' course.pk %}" class="collection-item">{{ course.course_name }}
+        ({{ course.course_number }})</a>
     {% endfor %}
-
+</div>
+{% include 'components/paginator.html' %}
+{% else %}
+<div class="collection">
+    <div href="#!" class="collection-item active">我的課程列表</div>
+    {% for course in course_list %}
+    <a href="{% url 'course:detail' course.id %}" class="collection-item">
+        {{ course.course_name }}
+        ({{ course.course_number }})
+    </a>
+    {% endfor %}
+</div>
+{% include 'components/paginator.html' %}
+{% endif %}
 {% endblock %}
