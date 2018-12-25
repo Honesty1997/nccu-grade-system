@@ -49,7 +49,7 @@ class Person(BaseModel):
             'executive': 3,
             'admin': 4,
         }
-        role = kwargs.get('role')
+        role = kwargs.get('role', None)
         if self.pk is None:
             if role != 4:
                 user = User.objects.create_user(account=self.email, password=self.phone_number)
@@ -59,6 +59,8 @@ class Person(BaseModel):
                 user = User.objects.create_superuser(
                     self.email, self.phone_number)
                 self.user = user
+        if role:
+            del kwargs['role']
         super().save(**kwargs)
 
     class Meta:
