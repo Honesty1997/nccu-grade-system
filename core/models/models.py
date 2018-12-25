@@ -59,6 +59,7 @@ class Person(BaseModel):
                 user = User.objects.create_superuser(
                     self.email, self.phone_number)
                 self.user = user
+        self.user.save()
         if role:
             del kwargs['role']
         super().save(**kwargs)
