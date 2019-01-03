@@ -7,7 +7,12 @@
             <li><a href="{% url 'course:update' course.id %}">編輯課程</a></li>
             <li><a href="#modal1" class="modal-trigger">刪除課程</a></li>
         </ul>
+    {% if user.is_admin %}
         <a href="{% url 'course:list' %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>課程列表</a>
+    {% endif %}
+    {% if user.is_teacher %}
+        <a href="{% url 'staff:course_list' %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>課程列表</a>   
+    {% endif %}
 {% endblock %}
 {% block main %}
     <h2>{{ course.course_name }}({{ course.course_number}})</h2>

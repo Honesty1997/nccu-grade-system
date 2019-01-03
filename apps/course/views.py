@@ -19,7 +19,7 @@ class CourseList(LoginRequiredMixin, ListView):
     context_object_name = 'course_list'
     base_url = 'course:list'
     paginate_by = 25
-    authorized_groups = ['admin', 'teacher']
+    authorized_groups = ['admin']
 
 class CourseDetail(LoginRequiredMixin, DetailView):
     model = Course
