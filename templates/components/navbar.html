@@ -6,8 +6,11 @@
                 {% if user.is_admin %}
                     <li><a href="{% url 'course:list' %}">課程列表</a></li>
                 {% endif %}
-                {% if user.is_teacher or user.is_student %}
+                {% if user.is_student %}
                     <li><a href="{% url 'student:course_list' %}">我的課程</a></li>
+                {% endif %}
+                {% if user.is_teacher %}
+                    <li><a href="{% url 'staff:course_list' %}">我的課程</a></li>
                 {% endif %}
                 {% if user.is_admin %}
                     <li><a href="{% url 'student:list' %}">學生列表</a></li>

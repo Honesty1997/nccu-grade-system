@@ -19,13 +19,13 @@ class CourseList(LoginRequiredMixin, ListView):
     context_object_name = 'course_list'
     base_url = 'course:list'
     paginate_by = 25
-    authorized_groups = ['admin']
+    authorized_groups = ['admin', 'teacher']
 
 class CourseDetail(LoginRequiredMixin, DetailView):
     model = Course
     template_name = 'modules/course/course_detail.html'
     contex_object_name = 'course'
-    authorized_groups = ['admin']
+    authorized_groups = ['admin', 'teacher']
 
 class CourseCreate(LoginRequiredMixin, CreateView, View):
     model = Course
@@ -39,7 +39,7 @@ class CourseUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'modules/common/form.html'
     fields = ['course_name', 'description']
     context_object_name = 'form'
-    authorized_groups = ['admin']
+    authorized_groups = ['admin', 'teacher']
 
 class CourseDelete(LoginRequiredMixin, DeleteView):
     model = Course
@@ -50,7 +50,7 @@ class SubjectDetail(LoginRequiredMixin, DetailView):
     model = ScoringSubject
     template_name = 'modules/course/subject.html'
     context_object_name = 'subject'
-    authorized_groups = ['admin']
+    authorized_groups = ['admin', 'teacher']
 
 class SubjectView(LoginRequiredMixin, View):
     authorized_groups = ['admin', 'teacher']
