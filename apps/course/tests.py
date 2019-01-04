@@ -7,41 +7,29 @@ from apps.staff.models import  Teacher
 from apps.staff.utils import DUMMY_TEACHERS, TeacherDummyHandler
 
 # Create your tests here.
-
 class CourseModelTestCase(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.teacher, _ = Teacher.objects.get_or_create(**DUMMY_TEACHERS[0])
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.teacher.delete()
+
     def setUp(self):
-        COURSE_INFO = [
-            {   
-                'course_number': 1234,
-                'course_name': 'Economics',
-                'description': 'This is a bad course',
-            },
-            {
-                'course_number': 5678,
-                'course_name': 'Manage Information System',
-                'description': 'This is a bad course',
-            },
-            {
-                'course_number': 4456,
-                'course_name': 'Chinese Literature',
-                'description': 'This is a bad course',
-            },
-            {
-                'course_number': 8953,
-                'course_name': 'Apple Economics',
-                'description': 'This is a bad course',
-            },
-            {
-                'course_number': 5983,
-                'course_name': 'Bad Course',
-                'description': 'This is a bad course',
-            },
-        ]
-        for info in COURSE_INFO:
-            Course.create(**info)
+        self.dummy_handler = CourseDummyHandler()
+        for course in DUMMY_COURSES:
+            course['teacher'] = CourseModelTestCase.teacher
+        self.dummy_handler.bulk_create(DUMMY_COURSES[:3])
 
     def tearDown(self):
-        pass
+        self.dummy_handler.delete_all()
+
+    def test_course_created(self):
+        for course in self.dummy_handler.objs:
+            self.assertIsNotNone(Course.objects.get(
+                course_number=course.course_number))
 
     def test_course_scoring_subject_removed(self):
         self.assertEqual(0 , 0, 'Assert zero is equal to zero')
@@ -112,3 +100,5 @@ class CourseOwnerPrivilegeCase(TestCase):
             else:
                 self.assertEqual(res1.status_code, 403)
                 self.assertEqual(res2.status_code, 403)
+class ScoringSubjectTestCase(TestCase):
+    pass
