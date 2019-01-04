@@ -22,3 +22,14 @@ class TeacherDetail(LoginRequiredMixin, DetailView):
     template_name = 'modules/staff/teacher_detail.html'
     authorized_groups = ['admin', 'teacher']
     context_object_name = 'teacher'
+
+
+class TeacherCourseList(LoginRequiredMixin, ListView):
+    template_name = 'modules/staff/teacher_course_list.html'
+    paginate_by = 25
+    base_url = 'staff:course_list'
+    context_object_name = 'course_list'
+    authorized_groups = ['teacher', 'admin']
+
+    def get_queryset(self):
+        return self.request.user.teacher.course_set.all()
