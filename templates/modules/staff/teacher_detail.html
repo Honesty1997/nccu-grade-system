@@ -1,10 +1,18 @@
 {% extends 'base/layout.html' %}
+{% block button_header %}
+{% if user.is_admin %}
+    <a href="#" class="btn" style="margin-right:5px;">編輯</a>
+    <a href="{% url 'auth:change-password' teacher.user.pk %}" class="btn" style="margin-right:5px;">更改密碼</a>
+{% endif %}
+    <a href="{% url 'staff:list' %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>老師列表</a>
+{% endblock %}
 {% block main %}
 <div class="card">
     <div class="card-content">
         {% comment %}
         <section style="display: flex; justify-content: end;">
-            <a href="{% url 'student:update' student.pk %}" class="btn" style="margin-right:5px;">Edit</a>
+        <!--       TODO: Add update view       -->
+            <a href="#" class="btn" style="margin-right:5px;">Edit</a>
         </section> 
         {% endcomment %}
         <h4>{{ teacher.name }}</h4>
