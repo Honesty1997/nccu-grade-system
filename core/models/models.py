@@ -64,5 +64,9 @@ class Person(BaseModel):
             del kwargs['role']
         super().save(**kwargs)
 
+    def delete(self, **kwargs):
+        self.user.delete()
+        super().delete(**kwargs)
+
     class Meta:
         abstract = True
