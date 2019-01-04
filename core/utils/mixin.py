@@ -6,7 +6,7 @@ class CourseOwnerMixin:
         if request.user.is_teacher:
             course = self.model.objects.get(pk=pk)
             if not course.teacher == request.user.teacher:
-                if request.META['HTTP_ACCEPT'] == 'application/json':
+                if request.META.get('HTTP_ACCEPT', '') == 'application/json':
                     message = {
                         'status': 'error',
                         'message': 'Not authorized.'
@@ -21,7 +21,7 @@ class SubjectOwnerMixin:
         if request.user.is_teacher:
             subject = self.model.objects.get(pk=pk)
             if not subject.course.teacher == request.user.teacher:
-                if request.META['HTTP_ACCEPT'] == 'application/json':
+                if request.META.get('HTTP_ACCEPT', '') == 'application/json':
                     message = {
                         'status': 'error',
                         'message': 'Not authorized.'

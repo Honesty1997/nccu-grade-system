@@ -56,7 +56,7 @@ class Course(BaseModel, Timestamp):
         self.save()
         return self, count
 
-    def add_new_subject(self, title: str):
+    def add_new_subject(self, title: str, subject_type: str):
         """Add new subject to a Course.
 
             Args:
@@ -69,7 +69,7 @@ class Course(BaseModel, Timestamp):
         """
         if not isinstance(title, str):
             raise TypeError('Title should be string.')
-        obj, created = ScoringSubject.objects.get_or_create(title=title, course=self)
+        obj, created = ScoringSubject.objects.get_or_create(title=title, course=self, subject_type=subject_type)
         if created:
             from apps.grade.models import Grade
             for student in obj.course.registered_students.all():

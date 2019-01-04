@@ -41,7 +41,7 @@ class CourseUpdate(LoginRequiredMixin, CourseOwnerMixin, UpdateView):
     context_object_name = 'form'
     authorized_groups = ['admin', 'teacher']
 
-class CourseDelete(LoginRequiredMixin, CourseOwnerMixin, DeleteView):
+class CourseDelete(LoginRequiredMixin, DeleteView):
     model = Course
     success_url = reverse_lazy('course:list')
     authorized_groups = ['admin']
