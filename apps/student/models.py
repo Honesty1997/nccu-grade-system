@@ -22,9 +22,9 @@ class Student(Person, Timestamp):
         from django.shortcuts import reverse
         return reverse('student:detail', kwargs={'pk': self.pk})
 
-    def save(self):
+    def save(self, **kwargs):
         self.student_number = Student.create_student_number()
-        super().save(role='student')
+        super().save(role='student', **kwargs)
 
     @staticmethod
     def create_student_number():

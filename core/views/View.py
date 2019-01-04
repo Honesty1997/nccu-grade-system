@@ -13,7 +13,7 @@ class View(V):
         for group in authorized_groups:
             if getattr(request.user, View.AUTHORIZED_LEVEL[group]):
                 return super().dispatch(request, *args, **kwargs)
-        if request.META['HTTP_ACCEPT'] == 'application/json':
+        if request.META.get('HTTP_ACCEPT', '') == 'application/json':
             message = {
                 'status': 'error',
                 'message': 'Not authorized.'

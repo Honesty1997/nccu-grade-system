@@ -6,7 +6,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
+from core.utils.mixin import CourseOwnerMixin, SubjectOwnerMixin
 from core.views import ListView, DeleteView, View, DetailView, CreateView, UpdateView
 from .models import Course, ScoringSubject
 from apps.student.models import Student
@@ -21,7 +21,7 @@ class CourseList(LoginRequiredMixin, ListView):
     paginate_by = 25
     authorized_groups = ['admin']
 
-class CourseDetail(LoginRequiredMixin, DetailView):
+class CourseDetail(LoginRequiredMixin, CourseOwnerMixin, DetailView):
     model = Course
     template_name = 'modules/course/course_detail.html'
     contex_object_name = 'course'
@@ -34,7 +34,7 @@ class CourseCreate(LoginRequiredMixin, CreateView, View):
     context_object_name = 'form'
     authorized_groups = ['admin']
 
-class CourseUpdate(LoginRequiredMixin, UpdateView):
+class CourseUpdate(LoginRequiredMixin, CourseOwnerMixin, UpdateView):
     model = Course
     template_name = 'modules/common/form.html'
     fields = ['course_name', 'description']
@@ -46,13 +46,13 @@ class CourseDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('course:list')
     authorized_groups = ['admin']
 
-class SubjectDetail(LoginRequiredMixin, DetailView):
+class SubjectDetail(LoginRequiredMixin, SubjectOwnerMixin, DetailView):
     model = ScoringSubject
     template_name = 'modules/course/subject.html'
     context_object_name = 'subject'
     authorized_groups = ['admin', 'teacher']
 
-class SubjectView(LoginRequiredMixin, View):
+class SubjectView(LoginRequiredMixin, SubjectOwnerMixin, View):
     authorized_groups = ['admin', 'teacher']
     def get(self, request, pk):
         form = ScoringSubjectForm()
@@ -66,7 +66,7 @@ class SubjectView(LoginRequiredMixin, View):
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
 
-class SubjectDelete(LoginRequiredMixin, DeleteView):
+class SubjectDelete(LoginRequiredMixin, SubjectOwnerMixin, DeleteView):
     model = ScoringSubject
     authorized_groups = ['teacher', 'admin']
     course_pk = None
@@ -77,7 +77,7 @@ class SubjectDelete(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse('course:detail', kwargs={'pk' : self.course_pk})
 
-class RegisterView(LoginRequiredMixin, View):
+class RegisterView(LoginRequiredMixin, SubjectOwnerMixin, View):
     authorized_groups = ['teacher', 'admin']
     def get(self, request, pk):
         accept_type = request.META.get('HTTP_ACCEPT', 'text/html')

@@ -8,15 +8,15 @@ from .models import Student
 from apps.course.models import Course
 
 # Create your views here.
-class StudentList(LoginRequiredMixin, ListView, View):
+class StudentList(LoginRequiredMixin, ListView):
     model = Student
     template_name = 'modules/student/student_list.html'
     context_object_name = 'student_list'
     paginate_by = 25
     base_url = 'student:list'
-    authorized_groups = ['admin', 'student']
+    authorized_groups = ['admin']
 
-class StudentDetail(LoginRequiredMixin, DetailView, View):
+class StudentDetail(LoginRequiredMixin, DetailView):
     model = Student
     template_name = 'modules/student/student_detail.html'
     context_object_name = 'student'
