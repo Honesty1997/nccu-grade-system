@@ -7,26 +7,20 @@
     {% elif user.is_admin %}
     <p>Hi admin</p>
     {% endif %}
-
-    {% if user.is_student %}
-<div class="collection">
-    <div href="#!" class="collection-item active">我的課程列表</div>
-    {% for course in course_list %}
-    <a href="{% url 'student:subject_list' course.pk %}" class="collection-item">{{ course.course_name }}
-        ({{ course.course_number }})</a>
-    {% endfor %}
-</div>
-{% include 'components/paginator.html' %}
-{% else %}
-<div class="collection">
-    <div href="#!" class="collection-item active">我的課程列表</div>
-    {% for course in course_list %}
-    <a href="{% url 'course:detail' course.id %}" class="collection-item">
-        {{ course.course_name }}
-        ({{ course.course_number }})
-    </a>
-    {% endfor %}
-</div>
-{% include 'components/paginator.html' %}
-{% endif %}
+    <section class="collection main-view white">
+        <div class="collection">
+                <div href="#!" class="collection-item active">我的課程列表</div>
+                {% for course in course_list %}
+                {% if user.is_student %}
+                    <a href="{% url 'student:subject_list' course.pk %}" class="collection-item">
+                {% else %}
+                    <a href="{% url 'course:detail' course.id %}" class="collection-item">
+                {% endif %}
+                    {{ course.course_name }}
+                    ({{ course.course_number }})
+                </a>
+                {% endfor %}
+            </div>
+        {% include 'components/paginator.html' %}            
+        </section>
 {% endblock %}
