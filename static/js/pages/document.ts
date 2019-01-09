@@ -12,7 +12,7 @@ export default class Document {
       $('select').formSelect();
     });
     const textareas = document.querySelectorAll('textarea');
-    for(let textarea of textareas) {
+    for(const textarea of textareas) {
       textarea.classList.add('materialize-textarea');
     }  
     const element = document.getElementsByClassName('tabs')[0];

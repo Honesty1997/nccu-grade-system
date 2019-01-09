@@ -109,9 +109,10 @@ class Course(BaseModel, Timestamp):
     def get_total_score(self, student=None):
         scoringsubject_list = []
         for subject in self.scoringsubject_set.all():
+            subject_type = '作業' if subject.subject_type == 'H' else '小考'
             subject_info = {
                 'title': subject.title,
-                'subject_type': subject.subject_type,
+                'subject_type': subject_type,
                 'score_list': subject.get_score_list()
             }
             if student:
