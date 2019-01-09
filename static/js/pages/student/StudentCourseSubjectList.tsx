@@ -2,9 +2,8 @@ import React from 'react';
 interface StudentCourseSubjectListState {
   subjects: Object[];
 };
-export default class StudentCourseSubjectList extends React.PureComponent {
-  public state: StudentCourseSubjectListState;
-  constructor(props) {
+export default class StudentCourseSubjectList extends React.PureComponent<{},StudentCourseSubjectListState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       subjects: []
@@ -35,7 +34,7 @@ export default class StudentCourseSubjectList extends React.PureComponent {
     return fetch(url, init);
   }
 
-  public render(): ReactNode {
+  public render(): React.ReactNode {
     const subjectItems = this.state.subjects.map(subject => (
       <li>
         <div className='collapsible-header'>

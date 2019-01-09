@@ -1,6 +1,6 @@
 import jQuery from 'jquery';
 
-export default function getCSRFToken(): string {
+export default function getCSRFToken(): string | null {
   var cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     let cookies = document.cookie.split(';');

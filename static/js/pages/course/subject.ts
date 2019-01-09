@@ -1,6 +1,7 @@
 import M from 'materialize-css';
 import getCSRFToken from '../../utils/getCSRFToken';
 import deleteRegister from '../common/delete';
+import { FormEvent } from 'react';
 
 export default class Subject {
 	constructor() {
@@ -17,7 +18,7 @@ export default class Subject {
 		$(`.score[data-id="${editId}"]`).html(`<input data-id="${editId}" type="number" value=${score} max="100" min="0" step="0.01">`);
 	}
 
-	public submitScore(event: Event): void {
+	public submitScore(event: FormEvent<HTMLFormElement>): void | boolean {
 		event.preventDefault();
 		const editId = $(event.target).data('id');
 		const newScore = $(`input[data-id="${editId}"]`).val();
@@ -29,6 +30,7 @@ export default class Subject {
 			});
 			return false;
 		}
+	
 		if (newScore > 100 || newScore < 0) {
 			M.toast({
 				html: 'input out of range.',
