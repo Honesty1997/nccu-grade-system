@@ -19,27 +19,21 @@
   },
   "homepage": "https://github.com/Honesty1997/nccu-grade-system#readme",
   "dependencies": {
-    "@types/jquery": "^3.3.29",
-    "@types/material-ui": "^0.21.5",
     "jquery": "^3.3.1",
     "materialize-css": "^1.0.0",
     "plotly.js": "^1.43.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-plotly.js": "^2.2.0",
-    "webpack": "^4.26.0"
+    "webpack": "^4.26.0",
+    "ts-loader": "^5.3.1",
+    "typescript": "^3.2.2",
+    "webpack-cli": "^3.1.2"
   },
   "devDependencies": {
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.10",
-    "eslint": "^5.5.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1",
-    "parcel": "^1.9.7",
-    "ts-loader": "^5.3.1",
-    "typescript": "^3.1.6",
-    "webpack-cli": "^3.1.2"
+    "@types/jquery": "^3.3.29",
+    "@types/material-ui": "^0.21.5"
   }
 }
