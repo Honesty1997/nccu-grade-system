@@ -29,7 +29,7 @@ const clientConfig = {
   output: {
     path: path.resolve(__dirname, 'static', 'build', 'js'),
     filename: '[name].js',
-    chunkFilename: '[name].bundle.js'
+    publicPath: '/static/build/js/',
   },
   resolve: {
     extensions: ['.ts', '.js', '.tsx'],
