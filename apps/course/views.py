@@ -53,6 +53,7 @@ class SubjectDetail(LoginRequiredMixin, SubjectOwnerMixin, DetailView):
     authorized_groups = ['admin', 'teacher']
 
 class SubjectView(LoginRequiredMixin, SubjectOwnerMixin, View):
+    model = ScoringSubject
     authorized_groups = ['admin', 'teacher']
     def get(self, request, pk):
         form = ScoringSubjectForm()
@@ -78,6 +79,7 @@ class SubjectDelete(LoginRequiredMixin, SubjectOwnerMixin, DeleteView):
         return reverse('course:detail', kwargs={'pk' : self.course_pk})
 
 class RegisterView(LoginRequiredMixin, SubjectOwnerMixin, View):
+    model = ScoringSubject
     authorized_groups = ['teacher', 'admin']
     def get(self, request, pk):
         accept_type = request.META.get('HTTP_ACCEPT', 'text/html')
@@ -136,10 +138,11 @@ def student_search(request, pk):
         'student': student.info(),
     }
 
-    return JsonResponse(response) 
+    return JsonResponse(response)
 
 
 class SubjectScoreView(LoginRequiredMixin, SubjectOwnerMixin, View):
+    model = ScoringSubject
     authorized_groups = ['teacher', 'admin']
     def get(self, request, subject_pk):
         subject = get_object_or_404(ScoringSubject, pk=subject_pk)
