@@ -46,15 +46,11 @@ class CourseDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('course:list')
     authorized_groups = ['admin']
 
-class SubjectDetail(LoginRequiredMixin, SubjectOwnerMixin, DetailView):
-    model = ScoringSubject
-    template_name = 'modules/course/subject.html'
-    context_object_name = 'subject'
+
+class SubjectView(LoginRequiredMixin, CourseOwnerMixin, View):
+    model = Course
     authorized_groups = ['admin', 'teacher']
 
-class SubjectView(LoginRequiredMixin, SubjectOwnerMixin, View):
-    model = ScoringSubject
-    authorized_groups = ['admin', 'teacher']
     def get(self, request, pk):
         form = ScoringSubjectForm()
         return render(request, 'modules/common/form.html', {'form': form})
@@ -67,13 +63,17 @@ class SubjectView(LoginRequiredMixin, SubjectOwnerMixin, View):
             return redirect(subject)
         return render(request, 'modules/common/form.html', {'form': form})
 
+class SubjectDetail(LoginRequiredMixin, SubjectOwnerMixin, DetailView):
+    model = ScoringSubject
+    template_name = 'modules/course/subject.html'
+    context_object_name = 'subject'
+    authorized_groups = ['admin', 'teacher']
+
+
 class SubjectDelete(LoginRequiredMixin, SubjectOwnerMixin, DeleteView):
     model = ScoringSubject
     authorized_groups = ['teacher', 'admin']
     course_pk = None
-    def delete(self, request, pk, subject_pk):
-        self.course_pk = pk
-        return super().delete(request, subject_pk)
 
     def get_success_url(self):
         return reverse('course:detail', kwargs={'pk' : self.course_pk})
@@ -144,6 +144,6 @@ def student_search(request, pk):
 class SubjectScoreView(LoginRequiredMixin, SubjectOwnerMixin, View):
     model = ScoringSubject
     authorized_groups = ['teacher', 'admin']
-    def get(self, request, subject_pk):
-        subject = get_object_or_404(ScoringSubject, pk=subject_pk)
+    def get(self, request, pk):
+        subject = get_object_or_404(ScoringSubject, pk=pk)
         return JsonResponse(subject.info())

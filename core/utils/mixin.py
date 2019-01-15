@@ -17,7 +17,7 @@ class CourseOwnerMixin:
 
 class SubjectOwnerMixin:
     def dispatch(self, request, *args, **kwargs):
-        pk = kwargs.get('subject_pk')
+        pk = kwargs.get('pk')
         if request.user.is_teacher:
             subject = self.model.objects.get(pk=pk)
             if not subject.course.teacher == request.user.teacher:

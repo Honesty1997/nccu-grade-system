@@ -3,7 +3,7 @@
         <a class='dropdown-trigger btn' href='#' data-target='course-options'>選項</a>
         <ul id="course-options" class="dropdown-content">
             <li><a href="{% url 'course:register' course.id %}">學生管理</a></li>
-            <li><a href="{% url 'course:create_subject' course.id %}">新增項目</a></li>
+            <li><a href="{% url 'course:subject_create' course.id %}">新增項目</a></li>
             <li><a href="{% url 'course:update' course.id %}">編輯課程</a></li>
             <li><a href="#modal1" class="modal-trigger">刪除課程</a></li>
         </ul>
