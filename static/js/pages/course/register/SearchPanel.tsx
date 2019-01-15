@@ -1,82 +1,107 @@
 import * as React from 'react';
-import { Component } from 'react';
+import {
+	Component
+} from 'react';
 import M from 'materialize-css';
+
+import { Student } from '../../../declaration/models/Student';
 
 import SearchResults from './SearchResults';
 
 interface SearchPanelState {
-    studentList: Array<Object>;
-    studentId: string;
+	studentList: Student[];
+	studentId: string;
 }
 
-export default class SearchPanel extends Component {
-    public state: SearchPanelState;
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            studentList: [],
-            studentId: '',
-        };
-        this.onChange = this.onChange.bind(this);
-        this.onClick = this.onClick.bind(this);
-    }
+interface SearchPanelProps {
+	courseId: string;
+	studentList: Student[];
+	addToList: (students: Student[]) => void;
+	fetchManageStudentResults: (type: string, studentId: string) => Promise<Response>;
+}
 
-    onChange(event: Event) {
-        const studentId: String = event.target.value;
-        this.setState({ studentId });
-    }
+export default class SearchPanel extends Component<SearchPanelProps, SearchPanelState> {
+	public state: SearchPanelState;
+	constructor(props: any) {
+		super(props);
+		this.state = {
+			studentList: [],
+			studentId: '',
+		};
+		this.onChange = this.onChange.bind(this);
+		this.onClick = this.onClick.bind(this);
+	}
 
-    onClick(event: Event) {
-        event.preventDefault();
-        const searchStudent = this.fetchSearchResults(this.state.studentId);
-        searchStudent
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                if (data.status == 'success') {
-                    const { student } = data;
-                    this.setState({ studentList: [student]});
-                } else {
-                    M.toast({ html: data.message, classes: 'red' });
-                }
-            })
-            .catch((err) => {
-                M.toast({ html: '錯誤', classes: 'red' });
-            });
-    }
+	public onChange(event: React.ChangeEvent < HTMLInputElement > ) {
+		const studentId: string = event.target.value;
+		this.setState({
+			studentId
+		});
+	}
 
-    fetchSearchResults(studentId: String) : Promise<Response>{
-        const requestUrl = `/course/${this.props.courseId}/studentsearch?student=${studentId}`;
-        const headers = new Headers();
-        headers.append('Content-type', 'application/json');
-        headers.append('Accept', 'application/json');
+	public onClick(event: React.SyntheticEvent < HTMLButtonElement > ) {
+		event.preventDefault();
+		const searchStudent = this.fetchSearchResults(this.state.studentId);
+		searchStudent
+			.then((res) => {
+				return res.json();
+			})
+			.then((data) => {
+				if (data.status == 'success') {
+					const {
+						student
+					} = data;
+					this.setState({
+						studentList: [student]
+					});
+				} else {
+					M.toast({
+						html: data.message,
+						classes: 'red'
+					});
+				}
+			})
+			.catch(() => {
+				M.toast({
+					html: '錯誤',
+					classes: 'red'
+				});
+			});
+	}
 
-        const init = {
-            method: 'GET',
-            headers,
-        };
+	public fetchSearchResults(studentId: String): Promise < Response > {
+		const requestUrl = `/course/studentsearch/${this.props.courseId}?student=${studentId}`;
+		const headers = new Headers();
+		headers.append('Content-type', 'application/json');
+		headers.append('Accept', 'application/json');
 
-        return fetch(requestUrl, init);
-    }
+		const init = {
+			method: 'GET',
+			headers,
+		};
 
-    render() {
-        return (
-            <div className="col m6 s12">
-                <input id="student-number" 
-                type="text" 
-                value={this.state.studentId} 
-                placeholder="輸入學生編號" 
-                onChange={this.onChange}
-                />
-                <button id="search" className="btn" onClick={this.onClick}>搜尋</button>
-                <SearchResults 
-                    fetchedList={this.state.studentList}
-                    studentList={this.props.studentList}
-                    addToList={this.props.addToList}
-                    fetchManageStudentResults={this.props.fetchManageStudentResults}
-                />
-            </div>
-        )
-    }
+		return fetch(requestUrl, init);
+	}
+
+	public render() {
+		return ( 
+		<div className = "col m6 s12" >
+			<input id = "student-number"
+			type = "text"
+			value = {this.state.studentId}
+			placeholder = "輸入學生編號"
+			onChange = {this.onChange}/>
+			<button id = "search"
+			className = "btn"
+			onClick = {this.onClick} >
+				搜尋
+			</button> 
+			<SearchResults 
+			fetchedList = {this.state.studentList}
+			studentList = {this.props.studentList}
+			addToList = {this.props.addToList}
+			fetchManageStudentResults = {this.props.fetchManageStudentResults}/>
+			</div>
+		);
+	}
 }

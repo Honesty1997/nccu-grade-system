@@ -1,7 +1,7 @@
 import jQuery from 'jquery';
 
-export default function getCSRFToken(): string | null {
-  var cookieValue = null;
+export default function getCSRFToken(): string {
+  let cookieValue;
   if (document.cookie && document.cookie !== '') {
     let cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
@@ -11,6 +11,9 @@ export default function getCSRFToken(): string | null {
         break;
       }
     }
+  }
+  if (cookieValue == null) {
+    throw new Error('User is not login.')
   }
   return cookieValue;
 }

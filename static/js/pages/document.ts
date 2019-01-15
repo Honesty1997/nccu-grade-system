@@ -12,12 +12,12 @@ export default class Document {
       $('select').formSelect();
     });
     const textareas = document.querySelectorAll('textarea');
-    for(const textarea of textareas) {
+    Array.prototype.forEach.call(textareas, (textarea: HTMLTextAreaElement)=> {
       textarea.classList.add('materialize-textarea');
-    }  
+    });
     const element = document.getElementsByClassName('tabs')[0];
     if (element) {
-      const instance = M.Tabs.init(element);
+      M.Tabs.init(element);
     }
     $('.dropdown-trigger').dropdown();
     $(document).ready(function(){

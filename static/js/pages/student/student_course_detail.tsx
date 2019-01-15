@@ -1,12 +1,13 @@
-import  React, { Suspense } from 'react';
+import  React from 'react';
 import ReactDOM from 'react-dom';
+
+import StudentCourseSubjectList from './StudentCourseSubjectList';
 
 export default class StudentCourseDetail {
   constructor() {
     const container = document.getElementById('student-course-detail');
-    const StudentCourseSubjectList = React.lazy(() => import('./StudentCourseSubjectList'));
     if (container) {
-      ReactDOM.render(<Suspense fallback={<div>載入中</div>}><StudentCourseSubjectList /></Suspense>, container);
+      ReactDOM.render(<StudentCourseSubjectList />, container);
     }
   }
 }
