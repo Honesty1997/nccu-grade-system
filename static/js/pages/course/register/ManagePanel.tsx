@@ -1,16 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 import { Component } from 'react';
 import M from 'materialize-css';
-import $ from 'jquery';
 
+import { Student } from '../../../declaration/models/Student';
 
-export default class ManagePanel extends Component {
-    constructor(props) {
+interface ManagePanelProps {
+    studentList: Student[];
+    fetchManageStudentResults: (type: string, studentId: number) => Promise<Response>;
+    removeFromList: (students: Student[]) => void;
+}
+export default class ManagePanel extends Component<ManagePanelProps, {}> {
+    constructor(props: ManagePanelProps) {
         super(props);
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick(student) {
+    onClick(student: Student) {
         const studentId = student.pk;
         const fetchRemoveResults = this.props.fetchManageStudentResults('delete', studentId);
         fetchRemoveResults
@@ -22,7 +27,7 @@ export default class ManagePanel extends Component {
                     this.props.removeFromList([student]);
                 }
             })
-            .catch((err) => {
+            .catch((err: Object) => {
                 M.toast({ html: '錯誤', classes: 'red' });
             });
     }

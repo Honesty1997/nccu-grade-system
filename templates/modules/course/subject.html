@@ -4,36 +4,50 @@
     <a href="{% url 'course:detail' subject.course.pk %}" class="btn" style="margin-right:auto;"><i class="material-icons" style="vertical-align: sub;">chevron_left</i>回到課程</a>
 {% endblock %}
 {% block main %}
-    <h5>{{ subject.title }}</h5>
-        <table>
-            <thead>
-                <tr>
-                    <th>名稱</th>
-                    <th>分數</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for grade in subject.grade_set.all %}
-                <tr>
-                    <td data-id="{{ grade.id }}">
-                        {{ grade.student.name }}
-                    </td>
-                    <td data-id="{{ grade.id }}" class="score">
-                        {{ grade.score }}
-                    </td>
-                    <td>
-                        <a data-id="{{ grade.id }}" class="waves-effect waves-light btn edit-score">edit</a>
-                    </td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td><strong>平均</strong></td>
-                    <td><strong id="subject-average">{{ subject.average }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
-
+    <div class="card">
+        <div class="row white card-content">
+            <span class="card-title">{{ subject.title }}</span>
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a class="active" href="#score-table">表格</a></li>
+                    <li class="tab col s3"><a href="#score-graph">圖表</a></li>
+                </ul>
+            </div>
+            <div class="col s12" id="score-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>名稱</th>
+                            <th>分數</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for grade in subject.grade_set.all %}
+                        <tr>
+                            <td data-id="{{ grade.id }}">
+                                {{ grade.student.name }}
+                            </td>
+                            <td data-id="{{ grade.id }}" class="score">
+                                {{ grade.score }}
+                            </td>
+                            <td>
+                                <a data-id="{{ grade.id }}" class="waves-effect waves-light btn edit-score">edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td><strong>平均</strong></td>
+                            <td><strong id="subject-average">{{ subject.average }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="score-graph">
+                score
+            </div>
+        </div>
+    </div>
         <div id="modal1" class="modal">
             <div class="modal-content">
               <h4>你確定要刪除這個評分項目？</h4>

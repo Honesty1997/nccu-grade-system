@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
-import Plot from 'react-plotly.js';
+import React, { Component, Suspense } from 'react';
+
+const Plot = React.lazy(() => /** webpackPrefetch: true */ import('react-plotly.js'));
 
 interface ScoreGraphProps {
   scoreList: string[];
   currentScore?: string;
   name: string;
+  type: 'box';
 };
 
 export default class ScoreGraph extends Component<ScoreGraphProps,{}> {
   public render() : React.ReactNode {
     const data = {
       name: this.props.name,
-      type: 'box',
+      type: this.props.type,
       x: this.props.scoreList.map(score => Number(score)),
     };
     const config = {
@@ -19,7 +21,9 @@ export default class ScoreGraph extends Component<ScoreGraphProps,{}> {
       responsive: true,
     };
     return (
-      <Plot data={[data]} config={config} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Plot data={[data]} config={config} layout={{}}/>
+      </Suspense>
     )
   }
 }

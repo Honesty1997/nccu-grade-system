@@ -3,7 +3,7 @@ const path = require('path');
 const baseConfig = {
   mode: 'development',
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.tsx'],
   },
   devtool: "cheap-module-eval-source-map",
   module: {
@@ -32,7 +32,7 @@ const clientConfig = {
     publicPath: '/static/build/js/',
   },
   resolve: {
-    extensions: ['.ts', '.js', '.tsx'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
     externals: {
     jquery: 'jQuery',

@@ -137,3 +137,10 @@ def student_search(request, pk):
     }
 
     return JsonResponse(response) 
+
+
+class SubjectScoreView(LoginRequiredMixin, SubjectOwnerMixin, View):
+    authorized_groups = ['teacher', 'admin']
+    def get(self, request, subject_pk):
+        subject = get_object_or_404(ScoringSubject, pk=subject_pk)
+        return JsonResponse(subject.info())

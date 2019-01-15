@@ -1,17 +1,11 @@
-import React, { Suspense } from 'react';
+import React from 'react';
+import ScoreGraph from '../../components/ScoreGraph';
+
+import { ScoreResult } from '../../declaration/models/Score';
 
 interface StudentCourseSubjectListState {
   subjects: ScoreResult[];
 };
-
-interface ScoreResult {
-  title: string;
-  subject_type: string;
-  score_list: string[];
-  current_score?: string;
-}
-
-const ScoreGraph = React.lazy(() => import(/* webpackPrefetch: true */ '../../components/ScoreGraph'));
 
 export default class StudentCourseSubjectList extends React.PureComponent<{},StudentCourseSubjectListState> {
   constructor(props: any) {
@@ -26,7 +20,6 @@ export default class StudentCourseSubjectList extends React.PureComponent<{},Stu
         return res.json();
       })
       .then(data => {
-        console.log(data);
         this.setState({ subjects: data.results });
       });
     $(document).ready(function () {
@@ -55,9 +48,7 @@ export default class StudentCourseSubjectList extends React.PureComponent<{},Stu
         </div>
         <div className='collapsible-body'>
           <div>我的成績 {subject.current_score}</div>
-          <Suspense fallback={<div>Loading....</div>}>
-            <ScoreGraph name={subject.title} scoreList={subject.score_list} />
-          </Suspense>
+            <ScoreGraph name={subject.title} scoreList={subject.score_list} type='box' />
         </div>
       </li>)
     );

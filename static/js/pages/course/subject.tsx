@@ -1,16 +1,22 @@
 import M from 'materialize-css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import getCSRFToken from '../../utils/getCSRFToken';
 import deleteRegister from '../common/delete';
-import { FormEvent } from 'react';
+import SubjectGraph from './SubjectGraph';
+import { ScoreResult } from '../../declaration/models/Score';
+
 
 export default class Subject {
 	constructor() {
 		deleteRegister('subject');
 		$('td').on('click', '.edit-score', this.editScore);
 		$('td').on('click', '.submit-score',this.submitScore);
+		this.initializeSubjectGraph();
 	}
 
-	public editScore(event: Event): void {
+	public editScore(event: JQuery.ClickEvent): void {
 		event.preventDefault();
 		const editId = $(event.target).data('id');
 		const score = parseFloat($(`.score[data-id="${editId}"]`).html());
@@ -18,7 +24,7 @@ export default class Subject {
 		$(`.score[data-id="${editId}"]`).html(`<input data-id="${editId}" type="number" value=${score} max="100" min="0" step="0.01">`);
 	}
 
-	public submitScore(event: FormEvent<HTMLFormElement>): void | boolean {
+	public submitScore(event: JQuery.ClickEvent): void | boolean {
 		event.preventDefault();
 		const editId = $(event.target).data('id');
 		const newScore = $(`input[data-id="${editId}"]`).val();
@@ -75,5 +81,28 @@ export default class Subject {
 					classes: 'red'
 				});
 			});
+	}
+
+	public initializeSubjectGraph(): void {
+		const container = document.getElementById('score-graph');
+		if (container) {
+			this.fetchSubjectScores().then(scoreResult => {
+				console.log(scoreResult);
+				console.log(container);
+				ReactDOM.render(<SubjectGraph subject={scoreResult} />, container);
+			});
+		}
+	}
+
+	public fetchSubjectScores(): Promise<ScoreResult> {
+		const requestUrl = `${window.location.pathname}/scores`;
+		const headers = new Headers();
+		headers.append('Accept-type', 'application/json');
+		return fetch(requestUrl, {
+			headers,
+			credentials: 'include',
+		}).then(response => {
+			return response.json() as Promise<ScoreResult>;
+		});
 	}
 }
