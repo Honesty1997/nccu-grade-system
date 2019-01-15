@@ -87,8 +87,6 @@ export default class Subject {
 		const container = document.getElementById('score-graph');
 		if (container) {
 			this.fetchSubjectScores().then(scoreResult => {
-				console.log(scoreResult);
-				console.log(container);
 				ReactDOM.render(<SubjectGraph subject={scoreResult} />, container);
 			});
 		}

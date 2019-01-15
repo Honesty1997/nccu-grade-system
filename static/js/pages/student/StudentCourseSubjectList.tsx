@@ -1,6 +1,5 @@
 import React from 'react';
 import ScoreGraph from '../../components/ScoreGraph';
-
 import { ScoreResult } from '../../declaration/models/Score';
 
 interface StudentCourseSubjectListState {
